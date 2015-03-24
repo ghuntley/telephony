@@ -17,7 +17,7 @@ namespace Telephony
         {
             if (String.IsNullOrWhiteSpace(receipients))
             {
-                throw new ArgumentNullException("receipients", "Supplied argument 'receipients' is null.");
+                throw new ArgumentNullException("receipients", "Supplied argument 'receipients' is null, whitespace or empty.");
             }
 
             To.Add(receipients);
@@ -50,11 +50,15 @@ namespace Telephony
         }
 
         public MailAddressCollection To { get; set; }
+
         public MailAddressCollection Cc { get; set; }
+
         public MailAddressCollection Bcc { get; set; }
 
         public AttachmentCollection Attachments { get; set; }
+
         public string Subject { get; set; }
+
         public string Body { get; set; }
     }
 }

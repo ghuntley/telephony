@@ -10,7 +10,7 @@ namespace TelephonySampleApp.Core.Pages
     {
         public MainPage()
         {
-            InitializeComponent();
+//            InitializeComponent();
         }
     }
 }
