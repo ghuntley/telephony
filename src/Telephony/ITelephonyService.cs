@@ -4,13 +4,13 @@ namespace Telephony
 {
     public interface ITelephonyService
     {
-        void ComposeEmail(string to, string subject, string body);
+        void ComposeEmail(Email email);
 
-        void ComposeSms(string number, string message);
+        void ComposeSms(string recipient, string message);
 
-        void MakeVideoCall(string name, string number);
+        void MakeVideoCall(string recipient, string displayName);
 
-        void MakePhoneCall(string name, string number);
+        void MakePhoneCall(string recipient, string displayName);
     }
 }
 

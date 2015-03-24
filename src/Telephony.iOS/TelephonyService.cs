@@ -35,15 +35,15 @@ namespace Telephony
             return phonenumber.Replace(" ", String.Empty);
         }
 
-        public virtual void ComposeSms(string number, string message = "")
+        public virtual void ComposeSms(string phoneNumber, string message = "")
         {
-            var url = new NSUrl(String.Format("sms://{0}?body=, {1}", CleanPhoneNumber(number), message));
+            var url = new NSUrl(String.Format("sms://{0}?body=, {1}", CleanPhoneNumber(phoneNumber), message));
             UIApplication.SharedApplication.OpenUrl(url);
         }
 
-        public virtual void MakeVideoCall(string name, string number)
+        public virtual void MakeVideoCall(string name, string displayName)
         {
-            var url = new NSUrl("facetime://" + number.Replace(" ", String.Empty));
+            var url = new NSUrl("facetime://" + displayName.Replace(" ", String.Empty));
             UIApplication.SharedApplication.OpenUrl(url);
         }
 

@@ -31,6 +31,12 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Attachment.cs" />
+    <Compile Include="AttachmentCollection.cs" />
+    <Compile Include="Email.cs" />
+    <Compile Include="FeatureNotImplementedException.cs" />
+    <Compile Include="MailAddress.cs" />
+    <Compile Include="MailAddressCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ITelephonyService.cs" />
   </ItemGroup>
