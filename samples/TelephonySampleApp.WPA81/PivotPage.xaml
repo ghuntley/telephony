@@ -1,0 +1,105 @@
+﻿<Page
+    x:Class="TelephonySampleApp.WPA81.PivotPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TelephonySampleApp.WPA81"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:data="using:TelephonySampleApp.WPA81.Data"
+    mc:Ignorable="d"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Transitions>
+        <TransitionCollection>
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <CommonNavigationTransitionInfo IsStaggeringEnabled="True"/>
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Transitions>
+
+    <Grid>
+        <Pivot x:Uid="Pivot" Title="MY APPLICATION" x:Name="pivot" CommonNavigationTransitionInfo.IsStaggerElement="True">
+            <!--Pivot item one-->
+            <PivotItem
+                x:Uid="PivotItem1"
+                Margin="19,14.5,0,0"
+                Header="first"
+                DataContext="{Binding FirstGroup}"
+                d:DataContext="{Binding Groups[0], Source={d:DesignData Source=/DataModel/SampleData.json, Type=data:SampleDataSource}}"
+                CommonNavigationTransitionInfo.IsStaggerElement="True">
+                <!--Double line list with text wrapping-->
+                <ListView
+                    ItemsSource="{Binding Items}"
+                    IsItemClickEnabled="True"
+                    ItemClick="ItemView_ItemClick"
+                    ContinuumNavigationTransitionInfo.ExitElementContainer="True">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0,0,0,9.5">
+                                <TextBlock
+                                    Text="{Binding Title}"
+                                    TextWrapping="Wrap"
+                                    Pivot.SlideInAnimationGroup="1"
+                                    CommonNavigationTransitionInfo.IsStaggerElement="True"
+                                    Style="{ThemeResource ListViewItemTextBlockStyle}"
+                                    Margin="0,0,19,0"/>
+                                <TextBlock
+                                    Text="{Binding Description}"
+                                    TextWrapping="WrapWholeWords"
+                                    Pivot.SlideInAnimationGroup="2" 
+                                    CommonNavigationTransitionInfo.IsStaggerElement="True" 
+                                    Style="{ThemeResource ListViewItemContentTextBlockStyle}"
+                                    Margin="0,0,19,0"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </PivotItem>
+
+            <!--Pivot item two-->
+            <PivotItem
+                x:Uid="PivotItem2"
+                Margin="19,14.5,0,0"
+                Header="second"
+                DataContext="{Binding SecondGroup}"
+                d:DataContext="{Binding Groups[1], Source={d:DesignData Source=/DataModel/SampleData.json, Type=data:SampleDataSource}}">
+                <!--Double line list no text wrapping-->
+                <ListView
+                    ItemsSource="{Binding Items}"
+                    IsItemClickEnabled="True"
+                    ItemClick="ItemView_ItemClick"
+                    Loaded="SecondPivot_Loaded"
+                    ContinuumNavigationTransitionInfo.ExitElementContainer="True">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0,0,0,9.5">
+                                <TextBlock
+                                    Text="{Binding Title}"
+                                    Pivot.SlideInAnimationGroup="1"
+                                    CommonNavigationTransitionInfo.IsStaggerElement="True"
+                                    Style="{StaticResource ListViewItemTextBlockStyle}"/>
+                                <TextBlock
+                                    Text="{Binding Description}"
+                                    Pivot.SlideInAnimationGroup="2"
+                                    CommonNavigationTransitionInfo.IsStaggerElement="True"
+                                    Style="{StaticResource ListViewItemContentTextBlockStyle}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </PivotItem>
+        </Pivot>
+    </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton x:Uid="AddAppBarButton" x:Name="AddAppBarButton" Label="add" Icon="Add" Click="AddAppBarButton_Click" />
+            <CommandBar.SecondaryCommands>
+                <AppBarButton x:Uid="SecondaryButton1" x:Name="SecondaryButton1" Label="secondary command 1" />
+                <AppBarButton x:Uid="SecondaryButton2" x:Name="SecondaryButton2" Label="secondary command 2" />
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
+</Page>

@@ -1,0 +1,12 @@
+﻿<Properties StartupItem="Telephony/Telephony.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Telephony.iOS/TelephonyService.cs">
+    <Files>
+      <File FileName="Telephony.iOS/TelephonyService.cs" Line="44" Column="44" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
