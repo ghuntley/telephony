@@ -33,8 +33,9 @@ namespace TelephonySampleApp.Core.ViewModels
     {
         [IgnoreDataMember]
         private readonly ITelephonyService TelephonyService;
+        
         [IgnoreDataMember]
-        private readonly string _recipient;
+        private string _recipient;
 
         public HomeViewModel(ITelephonyService telephonyService = null, IScreen hostScreen = null)
         {
