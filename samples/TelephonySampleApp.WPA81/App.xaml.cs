@@ -1,9 +1,11 @@
-﻿using TelephonySampleApp.WPA81.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+
+using TelephonySampleApp.WPA81.Common;
+
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -18,7 +20,6 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 // The Pivot Application template is documented at http://go.microsoft.com/fwlink/?LinkID=391641
-
 namespace TelephonySampleApp.WPA81
 {
     /// <summary>
@@ -46,12 +47,12 @@ namespace TelephonySampleApp.WPA81
         /// <param name="e">Details about the launch request and process.</param>
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
-#if DEBUG
+            #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {
                 this.DebugSettings.EnableFrameRateCounter = true;
             }
-#endif
+            #endif
 
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -115,16 +116,6 @@ namespace TelephonySampleApp.WPA81
         }
 
         /// <summary>
-        /// Restores the content transitions after the app has launched.
-        /// </summary>
-        private void RootFrame_FirstNavigated(object sender, NavigationEventArgs e)
-        {
-            var rootFrame = sender as Frame;
-            rootFrame.ContentTransitions = this.transitions ?? new TransitionCollection() { new NavigationThemeTransition() };
-            rootFrame.Navigated -= this.RootFrame_FirstNavigated;
-        }
-
-        /// <summary>
         /// Invoked when application execution is being suspended.  Application state is saved
         /// without knowing whether the application will be terminated or resumed with the contents
         /// of memory still intact.
@@ -136,6 +127,16 @@ namespace TelephonySampleApp.WPA81
             var deferral = e.SuspendingOperation.GetDeferral();
             await SuspensionManager.SaveAsync();
             deferral.Complete();
+        }
+
+        /// <summary>
+        /// Restores the content transitions after the app has launched.
+        /// </summary>
+        private void RootFrame_FirstNavigated(object sender, NavigationEventArgs e)
+        {
+            var rootFrame = sender as Frame;
+            rootFrame.ContentTransitions = this.transitions ?? new TransitionCollection() { new NavigationThemeTransition() };
+            rootFrame.Navigated -= this.RootFrame_FirstNavigated;
         }
     }
 }

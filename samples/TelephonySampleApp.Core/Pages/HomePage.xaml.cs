@@ -13,4 +13,3 @@ namespace TelephonySampleApp.Core.Pages
         }
     }
 }
-

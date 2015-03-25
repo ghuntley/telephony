@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Windows.Foundation.Collections;
 
 namespace TelephonySampleApp.WPA81.Common
@@ -11,27 +12,40 @@ namespace TelephonySampleApp.WPA81.Common
     /// </summary>
     public class ObservableDictionary : IObservableMap<string, object>
     {
-        private class ObservableDictionaryChangedEventArgs : IMapChangedEventArgs<string>
-        {
-            public ObservableDictionaryChangedEventArgs(CollectionChange change, string key)
-            {
-                this.CollectionChange = change;
-                this.Key = key;
-            }
-
-            public CollectionChange CollectionChange { get; private set; }
-            public string Key { get; private set; }
-        }
-
         private Dictionary<string, object> _dictionary = new Dictionary<string, object>();
+
         public event MapChangedEventHandler<string, object> MapChanged;
 
-        private void InvokeMapChanged(CollectionChange change, string key)
+        public int Count
         {
-            var eventHandler = MapChanged;
-            if (eventHandler != null)
+            get { return this._dictionary.Count; }
+        }
+
+        public bool IsReadOnly
+        {
+            get { return false; }
+        }
+
+        public ICollection<string> Keys
+        {
+            get { return this._dictionary.Keys; }
+        }
+
+        public ICollection<object> Values
+        {
+            get { return this._dictionary.Values; }
+        }
+
+        public object this[string key]
+        {
+            get
             {
-                eventHandler(this, new ObservableDictionaryChangedEventArgs(change, key));
+                return this._dictionary[key];
+            }
+            set
+            {
+                this._dictionary[key] = value;
+                this.InvokeMapChanged(CollectionChange.ItemChanged, key);
             }
         }
 
@@ -44,6 +58,41 @@ namespace TelephonySampleApp.WPA81.Common
         public void Add(KeyValuePair<string, object> item)
         {
             this.Add(item.Key, item.Value);
+        }
+
+        public void Clear()
+        {
+            var priorKeys = this._dictionary.Keys.ToArray();
+            this._dictionary.Clear();
+            foreach (var key in priorKeys)
+            {
+                this.InvokeMapChanged(CollectionChange.ItemRemoved, key);
+            }
+        }
+
+        public bool Contains(KeyValuePair<string, object> item)
+        {
+            return this._dictionary.Contains(item);
+        }
+
+        public bool ContainsKey(string key)
+        {
+            return this._dictionary.ContainsKey(key);
+        }
+
+        public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex)
+        {
+            int arraySize = array.Length;
+            foreach (var pair in this._dictionary)
+            {
+                if (arrayIndex >= arraySize) break;
+                array[arrayIndex++] = pair;
+            }
+        }
+
+        public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
+        {
+            return this._dictionary.GetEnumerator();
         }
 
         public bool Remove(string key)
@@ -68,37 +117,9 @@ namespace TelephonySampleApp.WPA81.Common
             return false;
         }
 
-        public object this[string key]
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            get
-            {
-                return this._dictionary[key];
-            }
-            set
-            {
-                this._dictionary[key] = value;
-                this.InvokeMapChanged(CollectionChange.ItemChanged, key);
-            }
-        }
-
-        public void Clear()
-        {
-            var priorKeys = this._dictionary.Keys.ToArray();
-            this._dictionary.Clear();
-            foreach (var key in priorKeys)
-            {
-                this.InvokeMapChanged(CollectionChange.ItemRemoved, key);
-            }
-        }
-
-        public ICollection<string> Keys
-        {
-            get { return this._dictionary.Keys; }
-        }
-
-        public bool ContainsKey(string key)
-        {
-            return this._dictionary.ContainsKey(key);
+            return this._dictionary.GetEnumerator();
         }
 
         public bool TryGetValue(string key, out object value)
@@ -106,43 +127,31 @@ namespace TelephonySampleApp.WPA81.Common
             return this._dictionary.TryGetValue(key, out value);
         }
 
-        public ICollection<object> Values
+        private void InvokeMapChanged(CollectionChange change, string key)
         {
-            get { return this._dictionary.Values; }
-        }
-
-        public bool Contains(KeyValuePair<string, object> item)
-        {
-            return this._dictionary.Contains(item);
-        }
-
-        public int Count
-        {
-            get { return this._dictionary.Count; }
-        }
-
-        public bool IsReadOnly
-        {
-            get { return false; }
-        }
-
-        public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
-        {
-            return this._dictionary.GetEnumerator();
-        }
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return this._dictionary.GetEnumerator();
-        }
-
-        public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex)
-        {
-            int arraySize = array.Length;
-            foreach (var pair in this._dictionary)
+            var eventHandler = MapChanged;
+            if (eventHandler != null)
             {
-                if (arrayIndex >= arraySize) break;
-                array[arrayIndex++] = pair;
+                eventHandler(this, new ObservableDictionaryChangedEventArgs(change, key));
+            }
+        }
+
+        private class ObservableDictionaryChangedEventArgs : IMapChangedEventArgs<string>
+        {
+            public ObservableDictionaryChangedEventArgs(CollectionChange change, string key)
+            {
+                this.CollectionChange = change;
+                this.Key = key;
+            }
+
+            public CollectionChange CollectionChange
+            {
+                get; private set;
+            }
+
+            public string Key
+            {
+                get; private set;
             }
         }
     }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -12,6 +13,58 @@ using Windows.UI.Xaml.Navigation;
 
 namespace TelephonySampleApp.WPA81.Common
 {
+    /// <summary>
+    /// Represents the method that will handle the <see cref="NavigationHelper.LoadState"/>event
+    /// </summary>
+    public delegate void LoadStateEventHandler(object sender, LoadStateEventArgs e);
+
+    /// <summary>
+    /// Represents the method that will handle the <see cref="NavigationHelper.SaveState"/>event
+    /// </summary>
+    public delegate void SaveStateEventHandler(object sender, SaveStateEventArgs e);
+
+    /// <summary>
+    /// Class used to hold the event data required when a page attempts to load state.
+    /// </summary>
+    public class LoadStateEventArgs : EventArgs
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LoadStateEventArgs"/> class.
+        /// </summary>
+        /// <param name="navigationParameter">
+        /// The parameter value passed to <see cref="Frame.Navigate(Type, Object)"/> 
+        /// when this page was initially requested.
+        /// </param>
+        /// <param name="pageState">
+        /// A dictionary of state preserved by this page during an earlier
+        /// session.  This will be null the first time a page is visited.
+        /// </param>
+        public LoadStateEventArgs(Object navigationParameter, Dictionary<string, Object> pageState)
+            : base()
+        {
+            this.NavigationParameter = navigationParameter;
+            this.PageState = pageState;
+        }
+
+        /// <summary>
+        /// The parameter value passed to <see cref="Frame.Navigate(Type, Object)"/> 
+        /// when this page was initially requested.
+        /// </summary>
+        public Object NavigationParameter
+        {
+            get; private set;
+        }
+
+        /// <summary>
+        /// A dictionary of state preserved by this page during an earlier
+        /// session.  This will be null the first time a page is visited.
+        /// </summary>
+        public Dictionary<string, Object> PageState
+        {
+            get; private set;
+        }
+    }
+
     /// <summary>
     /// NavigationHelper aids in navigation between pages.  It provides commands used to 
     /// navigate back and forward as well as registers for standard mouse and keyboard 
@@ -59,8 +112,9 @@ namespace TelephonySampleApp.WPA81.Common
     [Windows.Foundation.Metadata.WebHostHidden]
     public class NavigationHelper : DependencyObject
     {
-        private Page Page { get; set; }
-        private Frame Frame { get { return this.Page.Frame; } }
+        RelayCommand _goBackCommand;
+        RelayCommand _goForwardCommand;
+        private String _pageKey;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NavigationHelper"/> class.
@@ -77,9 +131,9 @@ namespace TelephonySampleApp.WPA81.Common
             // 2) Handle hardware navigation requests
             this.Page.Loaded += (sender, e) =>
             {
-#if WINDOWS_PHONE_APP
+            #if WINDOWS_PHONE_APP
                 Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtons_BackPressed;
-#else
+            #else
                 // Keyboard and mouse navigation only apply when occupying the entire window
                 if (this.Page.ActualHeight == Window.Current.Bounds.Height &&
                     this.Page.ActualWidth == Window.Current.Bounds.Width)
@@ -90,27 +144,37 @@ namespace TelephonySampleApp.WPA81.Common
                     Window.Current.CoreWindow.PointerPressed +=
                         this.CoreWindow_PointerPressed;
                 }
-#endif
+            #endif
             };
 
             // Undo the same changes when the page is no longer visible
             this.Page.Unloaded += (sender, e) =>
             {
-#if WINDOWS_PHONE_APP
+            #if WINDOWS_PHONE_APP
                 Windows.Phone.UI.Input.HardwareButtons.BackPressed -= HardwareButtons_BackPressed;
-#else
+            #else
                 Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -=
                     CoreDispatcher_AcceleratorKeyActivated;
                 Window.Current.CoreWindow.PointerPressed -=
                     this.CoreWindow_PointerPressed;
-#endif
+            #endif
             };
         }
 
-        #region Navigation support
+        /// <summary>
+        /// Register this event on the current page to populate the page
+        /// with content passed during navigation as well as any saved
+        /// state provided when recreating a page from a prior session.
+        /// </summary>
+        public event LoadStateEventHandler LoadState;
 
-        RelayCommand _goBackCommand;
-        RelayCommand _goForwardCommand;
+        /// <summary>
+        /// Register this event on the current page to preserve
+        /// state associated with the current page in case the
+        /// application is suspended or the page is discarded from
+        /// the navigaqtion cache.
+        /// </summary>
+        public event SaveStateEventHandler SaveState;
 
         /// <summary>
         /// <see cref="RelayCommand"/> used to bind to the back Button's Command property
@@ -137,6 +201,7 @@ namespace TelephonySampleApp.WPA81.Common
                 _goBackCommand = value;
             }
         }
+
         /// <summary>
         /// <see cref="RelayCommand"/> used for navigating to the most recent item in 
         /// the forward navigation history, if a Frame manages its own navigation history.
@@ -158,6 +223,16 @@ namespace TelephonySampleApp.WPA81.Common
             }
         }
 
+        private Frame Frame
+        {
+            get { return this.Page.Frame; }
+        }
+
+        private Page Page
+        {
+            get; set;
+        }
+
         /// <summary>
         /// Virtual method used by the <see cref="GoBackCommand"/> property
         /// to determine if the <see cref="Frame"/> can go back.
@@ -170,6 +245,7 @@ namespace TelephonySampleApp.WPA81.Common
         {
             return this.Frame != null && this.Frame.CanGoBack;
         }
+
         /// <summary>
         /// Virtual method used by the <see cref="GoForwardCommand"/> property
         /// to determine if the <see cref="Frame"/> can go forward.
@@ -191,6 +267,7 @@ namespace TelephonySampleApp.WPA81.Common
         {
             if (this.Frame != null && this.Frame.CanGoBack) this.Frame.GoBack();
         }
+
         /// <summary>
         /// Virtual method used by the <see cref="GoForwardCommand"/> property
         /// to invoke the <see cref="Windows.UI.Xaml.Controls.Frame.GoForward"/> method.
@@ -200,7 +277,68 @@ namespace TelephonySampleApp.WPA81.Common
             if (this.Frame != null && this.Frame.CanGoForward) this.Frame.GoForward();
         }
 
-#if WINDOWS_PHONE_APP
+        /// <summary>
+        /// Invoked when this page will no longer be displayed in a Frame.
+        /// This method calls <see cref="SaveState"/>, where all page specific
+        /// navigation and process lifetime management logic should be placed.
+        /// </summary>
+        /// <param name="e">Event data that describes how this page was reached.  The Parameter
+        /// property provides the group to be displayed.</param>
+        public void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            var frameState = SuspensionManager.SessionStateForFrame(this.Frame);
+            var pageState = new Dictionary<String, Object>();
+            if (this.SaveState != null)
+            {
+                this.SaveState(this, new SaveStateEventArgs(pageState));
+            }
+            frameState[_pageKey] = pageState;
+        }
+
+        /// <summary>
+        /// Invoked when this page is about to be displayed in a Frame.  
+        /// This method calls <see cref="LoadState"/>, where all page specific
+        /// navigation and process lifetime management logic should be placed.
+        /// </summary>
+        /// <param name="e">Event data that describes how this page was reached.  The Parameter
+        /// property provides the group to be displayed.</param>
+        public void OnNavigatedTo(NavigationEventArgs e)
+        {
+            var frameState = SuspensionManager.SessionStateForFrame(this.Frame);
+            this._pageKey = "Page-" + this.Frame.BackStackDepth;
+
+            if (e.NavigationMode == NavigationMode.New)
+            {
+                // Clear existing state for forward navigation when adding a new page to the
+                // navigation stack
+                var nextPageKey = this._pageKey;
+                int nextPageIndex = this.Frame.BackStackDepth;
+                while (frameState.Remove(nextPageKey))
+                {
+                    nextPageIndex++;
+                    nextPageKey = "Page-" + nextPageIndex;
+                }
+
+                // Pass the navigation parameter to the new page
+                if (this.LoadState != null)
+                {
+                    this.LoadState(this, new LoadStateEventArgs(e.Parameter, null));
+                }
+            }
+            else
+            {
+                // Pass the navigation parameter and preserved page state to the page, using
+                // the same strategy for loading suspended state and recreating pages discarded
+                // from cache
+                if (this.LoadState != null)
+                {
+                    this.LoadState(this, new LoadStateEventArgs(e.Parameter, (Dictionary<String, Object>)frameState[this._pageKey]));
+                }
+            }
+        }
+
+        #if WINDOWS_PHONE_APP
+
         /// <summary>
         /// Invoked when the hardware back button is pressed. For Windows Phone only.
         /// </summary>
@@ -214,7 +352,9 @@ namespace TelephonySampleApp.WPA81.Common
                 this.GoBackCommand.Execute(null);
             }
         }
-#else
+
+        #else
+
         /// <summary>
         /// Invoked on every keystroke, including system keys such as Alt key combinations, when
         /// this page is active and occupies the entire window.  Used to detect keyboard navigation
@@ -285,144 +425,15 @@ namespace TelephonySampleApp.WPA81.Common
                 if (forwardPressed) this.GoForwardCommand.Execute(null);
             }
         }
-#endif
 
-        #endregion
-
-        #region Process lifetime management
-
-        private String _pageKey;
-
-        /// <summary>
-        /// Register this event on the current page to populate the page
-        /// with content passed during navigation as well as any saved
-        /// state provided when recreating a page from a prior session.
-        /// </summary>
-        public event LoadStateEventHandler LoadState;
-        /// <summary>
-        /// Register this event on the current page to preserve
-        /// state associated with the current page in case the
-        /// application is suspended or the page is discarded from
-        /// the navigaqtion cache.
-        /// </summary>
-        public event SaveStateEventHandler SaveState;
-
-        /// <summary>
-        /// Invoked when this page is about to be displayed in a Frame.  
-        /// This method calls <see cref="LoadState"/>, where all page specific
-        /// navigation and process lifetime management logic should be placed.
-        /// </summary>
-        /// <param name="e">Event data that describes how this page was reached.  The Parameter
-        /// property provides the group to be displayed.</param>
-        public void OnNavigatedTo(NavigationEventArgs e)
-        {
-            var frameState = SuspensionManager.SessionStateForFrame(this.Frame);
-            this._pageKey = "Page-" + this.Frame.BackStackDepth;
-
-            if (e.NavigationMode == NavigationMode.New)
-            {
-                // Clear existing state for forward navigation when adding a new page to the
-                // navigation stack
-                var nextPageKey = this._pageKey;
-                int nextPageIndex = this.Frame.BackStackDepth;
-                while (frameState.Remove(nextPageKey))
-                {
-                    nextPageIndex++;
-                    nextPageKey = "Page-" + nextPageIndex;
-                }
-
-                // Pass the navigation parameter to the new page
-                if (this.LoadState != null)
-                {
-                    this.LoadState(this, new LoadStateEventArgs(e.Parameter, null));
-                }
-            }
-            else
-            {
-                // Pass the navigation parameter and preserved page state to the page, using
-                // the same strategy for loading suspended state and recreating pages discarded
-                // from cache
-                if (this.LoadState != null)
-                {
-                    this.LoadState(this, new LoadStateEventArgs(e.Parameter, (Dictionary<String, Object>)frameState[this._pageKey]));
-                }
-            }
-        }
-
-        /// <summary>
-        /// Invoked when this page will no longer be displayed in a Frame.
-        /// This method calls <see cref="SaveState"/>, where all page specific
-        /// navigation and process lifetime management logic should be placed.
-        /// </summary>
-        /// <param name="e">Event data that describes how this page was reached.  The Parameter
-        /// property provides the group to be displayed.</param>
-        public void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            var frameState = SuspensionManager.SessionStateForFrame(this.Frame);
-            var pageState = new Dictionary<String, Object>();
-            if (this.SaveState != null)
-            {
-                this.SaveState(this, new SaveStateEventArgs(pageState));
-            }
-            frameState[_pageKey] = pageState;
-        }
-
-        #endregion
+        #endif
     }
 
-    /// <summary>
-    /// Represents the method that will handle the <see cref="NavigationHelper.LoadState"/>event
-    /// </summary>
-    public delegate void LoadStateEventHandler(object sender, LoadStateEventArgs e);
-    /// <summary>
-    /// Represents the method that will handle the <see cref="NavigationHelper.SaveState"/>event
-    /// </summary>
-    public delegate void SaveStateEventHandler(object sender, SaveStateEventArgs e);
-
-    /// <summary>
-    /// Class used to hold the event data required when a page attempts to load state.
-    /// </summary>
-    public class LoadStateEventArgs : EventArgs
-    {
-        /// <summary>
-        /// The parameter value passed to <see cref="Frame.Navigate(Type, Object)"/> 
-        /// when this page was initially requested.
-        /// </summary>
-        public Object NavigationParameter { get; private set; }
-        /// <summary>
-        /// A dictionary of state preserved by this page during an earlier
-        /// session.  This will be null the first time a page is visited.
-        /// </summary>
-        public Dictionary<string, Object> PageState { get; private set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="LoadStateEventArgs"/> class.
-        /// </summary>
-        /// <param name="navigationParameter">
-        /// The parameter value passed to <see cref="Frame.Navigate(Type, Object)"/> 
-        /// when this page was initially requested.
-        /// </param>
-        /// <param name="pageState">
-        /// A dictionary of state preserved by this page during an earlier
-        /// session.  This will be null the first time a page is visited.
-        /// </param>
-        public LoadStateEventArgs(Object navigationParameter, Dictionary<string, Object> pageState)
-            : base()
-        {
-            this.NavigationParameter = navigationParameter;
-            this.PageState = pageState;
-        }
-    }
     /// <summary>
     /// Class used to hold the event data required when a page attempts to save state.
     /// </summary>
     public class SaveStateEventArgs : EventArgs
     {
-        /// <summary>
-        /// An empty dictionary to be populated with serializable state.
-        /// </summary>
-        public Dictionary<string, Object> PageState { get; private set; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="SaveStateEventArgs"/> class.
         /// </summary>
@@ -431,6 +442,14 @@ namespace TelephonySampleApp.WPA81.Common
             : base()
         {
             this.PageState = pageState;
+        }
+
+        /// <summary>
+        /// An empty dictionary to be populated with serializable state.
+        /// </summary>
+        public Dictionary<string, Object> PageState
+        {
+            get; private set;
         }
     }
 }

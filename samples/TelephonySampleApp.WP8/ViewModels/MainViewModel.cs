@@ -1,23 +1,47 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+
 using TelephonySampleApp.WP8.Resources;
 
 namespace TelephonySampleApp.WP8.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        private string _sampleProperty = "Sample Runtime Property Value";
+
         public MainViewModel()
         {
             this.Items = new ObservableCollection<ItemViewModel>();
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public bool IsDataLoaded
+        {
+            get;
+            private set;
+        }
+
         /// <summary>
         /// A collection for ItemViewModel objects.
         /// </summary>
-        public ObservableCollection<ItemViewModel> Items { get; private set; }
+        public ObservableCollection<ItemViewModel> Items
+        {
+            get; private set;
+        }
 
-        private string _sampleProperty = "Sample Runtime Property Value";
+        /// <summary>
+        /// Sample property that returns a localized string
+        /// </summary>
+        public string LocalizedSampleProperty
+        {
+            get
+            {
+                return AppResources.SampleProperty;
+            }
+        }
+
         /// <summary>
         /// Sample ViewModel property; this property is used in the view to display its value using a Binding
         /// </summary>
@@ -36,23 +60,6 @@ namespace TelephonySampleApp.WP8.ViewModels
                     NotifyPropertyChanged("SampleProperty");
                 }
             }
-        }
-
-        /// <summary>
-        /// Sample property that returns a localized string
-        /// </summary>
-        public string LocalizedSampleProperty
-        {
-            get
-            {
-                return AppResources.SampleProperty;
-            }
-        }
-
-        public bool IsDataLoaded
-        {
-            get;
-            private set;
         }
 
         /// <summary>
@@ -81,7 +88,6 @@ namespace TelephonySampleApp.WP8.ViewModels
             this.IsDataLoaded = true;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(String propertyName)
         {
             PropertyChangedEventHandler handler = PropertyChanged;

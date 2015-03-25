@@ -1,11 +1,17 @@
 ﻿using System;
+
+using CoreAnimation;
+
+using Foundation;
+
+using ObjCRuntime;
+
+using OpenGLES;
+
 using OpenTK;
 using OpenTK.Graphics.ES20;
 using OpenTK.Platform.iPhoneOS;
-using Foundation;
-using CoreAnimation;
-using ObjCRuntime;
-using OpenGLES;
+
 using UIKit;
 
 namespace TelephonySampleApp.iOS
@@ -18,7 +24,18 @@ namespace TelephonySampleApp.iOS
         {
         }
 
-        new EAGLView View { get { return (EAGLView)base.View; } }
+        new EAGLView View
+        {
+            get { return (EAGLView)base.View; }
+        }
+
+        public override void DidReceiveMemoryWarning()
+        {
+            // Releases the view if it doesn't have a superview.
+            base.DidReceiveMemoryWarning();
+
+            // Release any cached data, images, etc that aren't in use.
+        }
 
         public override void ViewDidLoad()
         {
@@ -41,21 +58,6 @@ namespace TelephonySampleApp.iOS
             }, this);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-
-            NSNotificationCenter.DefaultCenter.RemoveObserver(this);
-        }
-
-        public override void DidReceiveMemoryWarning()
-        {
-            // Releases the view if it doesn't have a superview.
-            base.DidReceiveMemoryWarning();
-
-            // Release any cached data, images, etc that aren't in use.
-        }
-
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
@@ -66,6 +68,13 @@ namespace TelephonySampleApp.iOS
         {
             base.ViewWillDisappear(animated);
             View.StopAnimating();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            NSNotificationCenter.DefaultCenter.RemoveObserver(this);
         }
     }
 }

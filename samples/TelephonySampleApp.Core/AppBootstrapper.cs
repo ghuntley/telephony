@@ -3,13 +3,12 @@
 using ReactiveUI;
 using ReactiveUI.XamForms;
 
-
 using Splat;
-
-using Xamarin.Forms;
 
 using TelephonySampleApp.Core.Pages;
 using TelephonySampleApp.Core.ViewModels;
+
+using Xamarin.Forms;
 
 namespace TelephonySampleApp.Core
 {
@@ -19,7 +18,6 @@ namespace TelephonySampleApp.Core
         {
             Router = new RoutingState();
             Locator.CurrentMutable.RegisterConstant(this, typeof(IScreen));
-
 
             Locator.CurrentMutable.Register(() => new HomePage(), typeof(IViewFor<HomeViewModel>));
 

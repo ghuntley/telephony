@@ -13,6 +13,11 @@ namespace TelephonySampleApp.WP8.ViewModels
     public class ItemViewModel : INotifyPropertyChanged
     {
         private string _lineOne;
+        private string _lineThree;
+        private string _lineTwo;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         /// <summary>
         /// Sample ViewModel property; this property is used in the view to display its value using a Binding.
         /// </summary>
@@ -33,28 +38,6 @@ namespace TelephonySampleApp.WP8.ViewModels
             }
         }
 
-        private string _lineTwo;
-        /// <summary>
-        /// Sample ViewModel property; this property is used in the view to display its value using a Binding.
-        /// </summary>
-        /// <returns></returns>
-        public string LineTwo
-        {
-            get
-            {
-                return _lineTwo;
-            }
-            set
-            {
-                if (value != _lineTwo)
-                {
-                    _lineTwo = value;
-                    NotifyPropertyChanged("LineTwo");
-                }
-            }
-        }
-
-        private string _lineThree;
         /// <summary>
         /// Sample ViewModel property; this property is used in the view to display its value using a Binding.
         /// </summary>
@@ -75,7 +58,26 @@ namespace TelephonySampleApp.WP8.ViewModels
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        /// <summary>
+        /// Sample ViewModel property; this property is used in the view to display its value using a Binding.
+        /// </summary>
+        /// <returns></returns>
+        public string LineTwo
+        {
+            get
+            {
+                return _lineTwo;
+            }
+            set
+            {
+                if (value != _lineTwo)
+                {
+                    _lineTwo = value;
+                    NotifyPropertyChanged("LineTwo");
+                }
+            }
+        }
+
         private void NotifyPropertyChanged(String propertyName)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
