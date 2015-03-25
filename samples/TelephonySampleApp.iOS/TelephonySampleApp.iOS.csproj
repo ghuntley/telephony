@@ -138,13 +138,13 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Telephony.iOS\Telephony.iOS.csproj">
-      <Project>{7e4977dc-d60b-4d6f-9ffe-d821221a2179}</Project>
+      <Project>{7E4977DC-D60B-4D6F-9FFE-D821221A2179}</Project>
       <Name>Telephony.iOS</Name>
-      <IsAppExtension>false</IsAppExtension>
+      <IsAppExtension>False</IsAppExtension>
       <IsWatchApp>false</IsWatchApp>
     </ProjectReference>
     <ProjectReference Include="..\TelephonySampleApp.Core\TelephonySampleApp.Core.csproj">
-      <Project>{ce82f5e5-2ba9-4d2e-9e7a-2da9a3877661}</Project>
+      <Project>{CE82F5E5-2BA9-4D2E-9E7A-2DA9A3877661}</Project>
       <Name>TelephonySampleApp.Core</Name>
     </ProjectReference>
   </ItemGroup>

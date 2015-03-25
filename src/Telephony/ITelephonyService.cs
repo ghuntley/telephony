@@ -12,15 +12,15 @@ namespace Telephony
 
         bool ComposeSMSFeatureEnabled { get ; }
 
-        Task ComposeSMS(string recipient, string message);
+        Task ComposeSMS(string recipient, string message = null);
 
         bool MakeVideoCallFeatureEnabled { get; }
 
-        Task MakeVideoCall(string recipient, string displayName);
+        Task MakeVideoCall(string recipient, string displayName = null);
 
         bool MakePhoneCallFeatureEnabled { get; }
 
-        Task MakePhoneCall(string recipient, string displayName);
+        Task MakePhoneCall(string recipient, string displayName = null);
     }
 }
 

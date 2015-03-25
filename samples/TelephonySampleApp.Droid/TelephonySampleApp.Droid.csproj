@@ -3,8 +3,6 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{1F4EEEDC-6CCF-433E-9A8F-10EAE4FCAEDF}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
@@ -15,8 +13,6 @@
     <AndroidApplication>true</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <AndroidUseLatestPlatformSdk>
-    </AndroidUseLatestPlatformSdk>
     <DevInstrumentationEnabled>True</DevInstrumentationEnabled>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <TargetFrameworkVersion>v4.0.3</TargetFrameworkVersion>
@@ -31,7 +27,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
     <AndroidLinkMode>None</AndroidLinkMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -42,22 +37,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
-    <AndroidLinkMode>SdkOnly</AndroidLinkMode>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
     <Reference Include="ReactiveUI">
       <HintPath>..\..\src\packages\reactiveui-core.6.4.0.1\lib\MonoAndroid\ReactiveUI.dll</HintPath>
-    </Reference>
-    <Reference Include="ReactiveUI.Events_XamForms">
-      <HintPath>..\..\src\packages\reactiveui-xamforms.6.4.0.1\lib\Portable-Net45+WinRT45+WP8+MonoAndroid10+MonoTouch10\ReactiveUI.Events_XamForms.dll</HintPath>
-    </Reference>
-    <Reference Include="ReactiveUI.XamForms">
-      <HintPath>..\..\src\packages\reactiveui-xamforms.6.4.0.1\lib\Portable-Net45+WinRT45+WP8+MonoAndroid10+MonoTouch10\ReactiveUI.XamForms.dll</HintPath>
-    </Reference>
-    <Reference Include="Splat">
-      <HintPath>..\..\src\packages\Splat.1.6.0\lib\monoandroid\Splat.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -77,6 +62,15 @@
     <Reference Include="System.Xml" />
     <Reference Include="Xamarin.Android.Support.v4">
       <HintPath>..\..\src\packages\Xamarin.Android.Support.v4.21.0.3.0\lib\MonoAndroid10\Xamarin.Android.Support.v4.dll</HintPath>
+    </Reference>
+    <Reference Include="Splat">
+      <HintPath>..\..\src\packages\Splat.1.6.2\lib\monoandroid\Splat.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Core">
+      <HintPath>..\..\src\packages\Xamarin.Forms.1.4.1.6347-pre2\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Xaml">
+      <HintPath>..\..\src\packages\Xamarin.Forms.1.4.1.6347-pre2\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -103,11 +97,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Telephony.Droid\Telephony.Droid.csproj">
-      <Project>{0e194509-b09a-4ea7-93bc-86e856979c1a}</Project>
+      <Project>{0E194509-B09A-4EA7-93BC-86E856979C1A}</Project>
       <Name>Telephony.Droid</Name>
     </ProjectReference>
     <ProjectReference Include="..\TelephonySampleApp.Core\TelephonySampleApp.Core.csproj">
-      <Project>{ce82f5e5-2ba9-4d2e-9e7a-2da9a3877661}</Project>
+      <Project>{CE82F5E5-2BA9-4D2E-9E7A-2DA9A3877661}</Project>
       <Name>TelephonySampleApp.Core</Name>
     </ProjectReference>
   </ItemGroup>

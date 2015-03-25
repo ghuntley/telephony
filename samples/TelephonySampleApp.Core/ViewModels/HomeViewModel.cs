@@ -20,27 +20,32 @@ namespace TelephonySampleApp.Core.ViewModels
     {
         ReactiveCommand<Unit> ComposeEmail
         {
-            get; set;
+            get;
+            set;
         }
 
         ReactiveCommand<Unit> ComposeSMS
         {
-            get; set;
+            get;
+            set;
         }
 
         ReactiveCommand<Unit> MakePhoneCall
         {
-            get; set;
+            get;
+            set;
         }
 
         ReactiveCommand<Unit> MakeVideoCall
         {
-            get; set;
+            get;
+            set;
         }
 
         string Recipient
         {
-            get; set;
+            get;
+            set;
         }
     }
 
@@ -55,7 +60,7 @@ namespace TelephonySampleApp.Core.ViewModels
 
         public HomeViewModel(ITelephonyService telephonyService = null, IScreen hostScreen = null)
         {
-            TelephonyService == telephonyService ?? Locator.Current.GetService<ITelephonyService>();
+            TelephonyService = telephonyService ?? Locator.Current.GetService<ITelephonyService>();
 
             HostScreen = hostScreen ?? Locator.Current.GetService<IScreen>();
 
