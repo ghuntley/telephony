@@ -6,7 +6,8 @@ using TelephonySampleApp.Core;
 
 namespace TelephonySampleApp.Droid
 {
-    [Application(Label = "TelephonySampleApp")]
+
+    [Application]
     public class AndroidApplication : Application
     {
         AutoSuspendHelper _autoSuspendHelper;

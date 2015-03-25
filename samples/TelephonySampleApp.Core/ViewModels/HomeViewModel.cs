@@ -64,7 +64,7 @@ namespace TelephonySampleApp.Core.ViewModels
 
             HostScreen = hostScreen ?? Locator.Current.GetService<IScreen>();
 
-            var canComposeSMS = this.WhenAnyValue(vm => IsAValidPhoneNumber(vm.Recipient) && vm.TelephonyService.ComposeSMSFeatureEnabled);
+            var canComposeSMS = this.WhenAny(x => x.Recipient, x => !String.IsNullOrWhiteSpace(x.Value));
             ComposeSMS = ReactiveCommand.CreateAsyncTask(canComposeSMS, async _ =>
             {
 
@@ -72,7 +72,7 @@ namespace TelephonySampleApp.Core.ViewModels
             });
             ComposeSMS.ThrownExceptions.Subscribe(ex => UserError.Throw("Does this device have the capability to send SMS?", ex));
 
-            var canComposeEmail = this.WhenAnyValue(vm => IsAValidEmailAddress(vm.Recipient) && vm.TelephonyService.ComposeEmailFeatureEnabled);
+            var canComposeEmail = this.WhenAny(x => x.Recipient, x => !String.IsNullOrWhiteSpace(x.Value));
             ComposeEmail = ReactiveCommand.CreateAsyncTask(canComposeEmail, async _ =>
             {
                 var email = new Email(receipients: Recipient);
@@ -81,14 +81,14 @@ namespace TelephonySampleApp.Core.ViewModels
             });
             ComposeEmail.ThrownExceptions.Subscribe(ex => UserError.Throw("Recipient potentially is not a well formed email address.", ex));
 
-            var canMakePhoneCall = this.WhenAnyValue(vm => IsAValidPhoneNumber(vm.Recipient) && vm.TelephonyService.MakePhoneCallFeatureEnabled);
+            var canMakePhoneCall = this.WhenAny(x => x.Recipient, x => !String.IsNullOrWhiteSpace(x.Value));
             MakePhoneCall = ReactiveCommand.CreateAsyncTask(canMakePhoneCall, async _ =>
             {
                 await TelephonyService.MakePhoneCall(Recipient);
             });
             MakePhoneCall.ThrownExceptions.Subscribe(ex => UserError.Throw("Does this device have the capability to make phone calls?", ex));
 
-            var canMakeVideoCall = this.WhenAnyValue(vm => (IsAValidPhoneNumber(vm.Recipient) || IsAValidEmailAddress(vm.Recipient)) && vm.TelephonyService.MakeVideoCallFeatureEnabled);
+            var canMakeVideoCall = this.WhenAny(x => x.Recipient, x => !String.IsNullOrWhiteSpace(x.Value));
             MakeVideoCall = ReactiveCommand.CreateAsyncTask(canMakeVideoCall, async _ =>
             {
 
@@ -142,15 +142,11 @@ namespace TelephonySampleApp.Core.ViewModels
         [IgnoreDataMember]
         public string UrlPathSegment
         {
-            get { return "Home"; }
+            get { return "Telephony"; }
         }
 
-        private static bool IsAValidEmailAddress(string s)
-        {
-            return s.Contains("@");
-        }
 
-        private static bool IsAValidPhoneNumber(string s)
+        private  bool IsAValidPhoneNumber(string s)
         {
             int result;
             var phoneNumber = s.Replace(" ", "")

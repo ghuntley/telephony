@@ -17,7 +17,7 @@ using TelephonySampleApp.Core;
 
 namespace TelephonySampleApp.Droid
 {
-    [Activity(Label = "TelephonySampleApp.Droid", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "Telephony", Icon = "@drawable/icon_white", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : FormsApplicationActivity
     {
         public MainActivity()
