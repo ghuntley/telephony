@@ -1,24 +1,26 @@
 ﻿using System;
+using System.Threading.Tasks;
+
 
 namespace Telephony
 {
     public interface ITelephonyService
     {
-        bool CanComposeEmail { get; }
+        bool ComposeEmailFeatureEnabled { get; }
 
-        void ComposeEmail(Email email);
+        Task ComposeEmail(Email email);
 
-        bool CanComposeSMS { get ; }
+        bool ComposeSMSFeatureEnabled { get ; }
 
-        void ComposeSms(string recipient, string message);
+        Task ComposeSMS(string recipient, string message);
 
-        bool CanMakeVideoCall { get; }
+        bool MakeVideoCallFeatureEnabled { get; }
 
-        void MakeVideoCall(string recipient, string displayName);
+        Task MakeVideoCall(string recipient, string displayName);
 
-        bool CanMakePhoneCall { get; }
+        bool MakePhoneCallFeatureEnabled { get; }
 
-        void MakePhoneCall(string recipient, string displayName);
+        Task MakePhoneCall(string recipient, string displayName);
     }
 }
 

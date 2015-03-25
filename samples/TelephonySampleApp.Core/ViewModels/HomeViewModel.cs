@@ -42,15 +42,15 @@ namespace TelephonySampleApp.Core.ViewModels
 
             HostScreen = hostScreen ?? Locator.Current.GetService<IScreen>();
 
-            var canComposeSMS = this.WhenAnyValue(vm => IsAValidPhoneNumber(vm.Recipient) && vm.TelephonyService.CanComposeSMS);
+            var canComposeSMS = this.WhenAnyValue(vm => IsAValidPhoneNumber(vm.Recipient) && vm.TelephonyService.ComposeSMSFeatureEnabled);
             ComposeSMS = ReactiveCommand.CreateAsyncTask(canComposeSMS, async _ =>
             {
 
-                await TelephonyService.ComposeSms(Recipient); 
+                await TelephonyService.ComposeSMS(Recipient); 
             });
             ComposeSMS.ThrownExceptions.Subscribe(ex => UserError.Throw("Does this device have the capability to send SMS?", ex));
 
-            var canComposeEmail = this.WhenAnyValue(vm => IsAValidEmailAddress(vm.Recipient) && vm.TelephonyService.CanComposeEmail);
+            var canComposeEmail = this.WhenAnyValue(vm => IsAValidEmailAddress(vm.Recipient) && vm.TelephonyService.ComposeEmailFeatureEnabled);
             ComposeEmail = ReactiveCommand.CreateAsyncTask(canComposeEmail, async _ =>
             {
                 var email = new Email(receipients: Recipient);
@@ -59,15 +59,14 @@ namespace TelephonySampleApp.Core.ViewModels
             });
             ComposeEmail.ThrownExceptions.Subscribe(ex => UserError.Throw("Recipient potentially is not a well formed email address.", ex));
 
-            var canMakePhoneCall = this.WhenAnyValue(vm => IsAValidPhoneNumber(vm.Recipient) && vm.TelephonyService.CanMakePhoneCall);
+            var canMakePhoneCall = this.WhenAnyValue(vm => IsAValidPhoneNumber(vm.Recipient) && vm.TelephonyService.MakePhoneCallFeatureEnabled);
             MakePhoneCall = ReactiveCommand.CreateAsyncTask(canMakePhoneCall, async _ =>
             {
-
                 await TelephonyService.MakePhoneCall(Recipient); 
             });
             MakePhoneCall.ThrownExceptions.Subscribe(ex => UserError.Throw("Does this device have the capability to make phone calls?", ex));
 
-            var canMakeVideoCall = this.WhenAnyValue(vm => (IsAValidPhoneNumber(vm.Recipient) || IsAValidEmailAddress(vm.Recipient)) && vm.TelephonyService.CanMakeVideoCall);
+            var canMakeVideoCall = this.WhenAnyValue(vm => (IsAValidPhoneNumber(vm.Recipient) || IsAValidEmailAddress(vm.Recipient)) && vm.TelephonyService.MakeVideoCallFeatureEnabled);
             MakeVideoCall = ReactiveCommand.CreateAsyncTask(canMakeVideoCall, async _ =>
             {
 
