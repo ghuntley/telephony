@@ -10,10 +10,9 @@ namespace TelephonySampleApp.Core
     {
         public App()
         {
-            // taken from https://github.com/pdoh00/Time2Brew/blob/master/Time2Brew/App.cs
-            // var bootstrapper = RxApp.SuspensionHost.GetAppState<AppBootstrapper>();
-            //
-            // MainPage = bootstrapper.CreateMainPage();
+            var bootstrapper = RxApp.SuspensionHost.GetAppState<AppBootstrapper>();
+            
+            MainPage = bootstrapper.CreateMainPage();
         }
 
         /// <summary>

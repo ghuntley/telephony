@@ -2,30 +2,36 @@
 
 using Android.App;
 using Android.Content;
-using Android.OS;
+using Android.Content.PM;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Android.OS;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.Android;
+
+
+using ReactiveUI;
+
+using TelephonySampleApp.Core;
 
 namespace TelephonySampleApp.Droid
 {
-    [Activity(Label = "TelephonySampleApp.Droid", MainLauncher = true, Icon = "@drawable/icon")]
-    public class MainActivity : Activity
+    [Activity(Label = "TelephonySampleApp.Droid", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    public class MainActivity : FormsApplicationActivity
     {
-        int count = 1;
+        public MainActivity()
+        {
+            Console.WriteLine("Start");
+        }
 
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
+            Forms.Init(this, bundle);
 
-            // Set our view from the "main" layout resource
-            SetContentView(Resource.Layout.Main);
-
-            // Get our button from the layout resource,
-            // and attach an event to it
-            Button button = FindViewById<Button>(Resource.Id.MyButton);
-
-            button.Click += delegate { button.Text = string.Format("{0} clicks!", count++); };
+            var mainPage = RxApp.SuspensionHost.GetAppState<AppBootstrapper>().CreateMainPage();
+            this.SetPage(mainPage);
         }
     }
 }

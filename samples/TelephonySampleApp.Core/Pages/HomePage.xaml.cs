@@ -17,12 +17,12 @@ namespace TelephonySampleApp.Core.Pages
         {
             InitializeComponent();
 
-            this.Bind(ViewModel, vm => vm.Recipient, v => v.Recipient.Text);
-            
-            this.BindCommand(ViewModel, vm => vm.ComposeEmail, v => v.ComposeEmail);
-            this.BindCommand(ViewModel, vm => vm.ComposeSMS, v => v.ComposeSMS);
-            this.BindCommand(ViewModel, vm => vm.MakePhoneCall, v => v.MakePhoneCall);
-            this.BindCommand(ViewModel, vm => vm.MakeVideoCall, v => v.MakeVideoCall);
+//            this.Bind(ViewModel, vm => vm.Recipient, v => v.Recipient.Text);
+//            
+//            this.BindCommand(ViewModel, vm => vm.ComposeEmail, v => v.ComposeEmail);
+//            this.BindCommand(ViewModel, vm => vm.ComposeSMS, v => v.ComposeSMS);
+//            this.BindCommand(ViewModel, vm => vm.MakePhoneCall, v => v.MakePhoneCall);
+//            this.BindCommand(ViewModel, vm => vm.MakeVideoCall, v => v.MakeVideoCall);
         }
 
         public HomeViewModel ViewModel
