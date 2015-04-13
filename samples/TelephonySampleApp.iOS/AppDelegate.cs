@@ -8,6 +8,8 @@ using Xamarin.Forms;
 using Foundation;
 
 using UIKit;
+using Splat;
+using Telephony;
 
 namespace TelephonySampleApp.iOS
 {
@@ -24,6 +26,8 @@ namespace TelephonySampleApp.iOS
         public AppDelegate()
         {
             RxApp.SuspensionHost.CreateNewAppState = () => new AppBootstrapper();
+            
+            Locator.CurrentMutable.RegisterConstant(new TelephonyService(), typeof(ITelephonyService));
         }
 
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
