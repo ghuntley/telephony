@@ -164,9 +164,13 @@ namespace Telephony
                 return to_string;
 
             if (!String.IsNullOrEmpty(displayName))
+            {
                 to_string = String.Format("\"{0}\" <{1}>", DisplayName, Address);
+            }
             else
+            {
                 to_string = address;
+            }
 
             return to_string;
         }
@@ -174,7 +178,7 @@ namespace Telephony
         private static FormatException CreateFormatException()
         {
             return new FormatException("The specified string is not in the "
-                                       + "form required for an e-mail address.");
+            + "form required for an e-mail address.");
         }
 
     }

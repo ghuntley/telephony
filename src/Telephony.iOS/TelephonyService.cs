@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 
+using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 
@@ -17,9 +19,9 @@ namespace Telephony
         {
             var mailer = new MFMailComposeViewController();
 
-            mailer.SetToRecipients(email.To.ToArray());
-            mailer.SetCcRecipients(email.Cc.ToArray());
-            mailer.SetBccRecipients(email.Bcc.ToArray());
+            mailer.SetToRecipients(email.To.Select(x => x.Address).ToArray());
+            mailer.SetCcRecipients(email.Cc.Select(x => x.Address).ToArray());
+            mailer.SetBccRecipients(email.Bcc.Select(x => x.Address).ToArray());
 
             mailer.SetSubject(email.Subject ?? string.Empty);
             mailer.SetMessageBody(email.Body ?? string.Empty, email.IsHTML);
@@ -30,7 +32,7 @@ namespace Telephony
 
             UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(mailer, true, null);
             
-            return null;
+            return Task.FromResult(true);
         }
 
         public Task ComposeSMS(string recipient, string message = null)

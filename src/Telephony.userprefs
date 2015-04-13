@@ -1,15 +1,17 @@
 ﻿<Properties StartupItem="../samples/TelephonySampleApp.iOS/TelephonySampleApp.iOS.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone4s.8.2" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone4s.8.3" />
   <MonoDevelop.Ide.Workbench ActiveDocument="../samples/TelephonySampleApp.iOS/AppDelegate.cs">
     <Files>
-      <File FileName="../samples/TelephonySampleApp.iOS/AppDelegate.cs" Line="28" Column="55" />
+      <File FileName="../samples/TelephonySampleApp.iOS/AppDelegate.cs" Line="47" Column="26" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/ghuntley/Work/telephony/samples/TelephonySampleApp.Core/ViewModels/HomeViewModel.cs" line="157" column="1" />
-      <Breakpoint file="/Users/ghuntley/Work/telephony/samples/TelephonySampleApp.Core/ViewModels/HomeViewModel.cs" line="150" column="1" />
+      <Breakpoint file="/Users/ghuntley/Work/telephony/samples/TelephonySampleApp.Core/ViewModels/HomeViewModel.cs" line="158" column="1" />
+      <Breakpoint file="/Users/ghuntley/Work/telephony/samples/TelephonySampleApp.Core/ViewModels/HomeViewModel.cs" line="151" column="1" />
       <Breakpoint file="/Users/ghuntley/Work/telephony/src/Telephony.Droid/TelephonyService.cs" line="58" column="1" />
+      <Breakpoint file="/Users/ghuntley/Work/telephony/src/Telephony.iOS/TelephonyService.cs" line="31" column="1" />
+      <Breakpoint file="/Users/ghuntley/Work/telephony/src/Telephony.iOS/TelephonyService.cs" line="18" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

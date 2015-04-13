@@ -43,7 +43,7 @@ namespace Telephony
             
                 intent.SetType("message/rfc822");
             
-                return null;
+                return Task.FromResult(true);
                 //this.StartActivity(intent);
 //            Device.StartActivity(intent);
             }
@@ -62,7 +62,7 @@ namespace Telephony
                 intent.PutExtra("sms_body", message ?? string.Empty);
                 //            StartActivity(smsIntent);
                 
-                return null;
+                return Task.FromResult(true);
             }
             catch (Exception ex)
             {
@@ -74,7 +74,7 @@ namespace Telephony
         {
             try
             {
-                return null;
+                return Task.FromResult(true);
             }
             catch (Exception ex)
             {
@@ -86,7 +86,7 @@ namespace Telephony
         {
             try
             {
-                return null;
+                return Task.FromResult(true);
             }
             catch (Exception ex)
             {

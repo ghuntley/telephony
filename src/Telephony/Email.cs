@@ -5,7 +5,7 @@ namespace Telephony
 {
     public class Email
     {
-        public Email()
+        protected Email()
         {
             To = new MailAddressCollection();
             Cc = new MailAddressCollection();
@@ -13,7 +13,7 @@ namespace Telephony
             Attachments = new AttachmentCollection();
         }
 
-        public Email(string receipients, string subject = null, string body = null)
+        public Email(string receipients, string subject = null, string body = null) : this()
         {
             if (String.IsNullOrWhiteSpace(receipients))
             {
@@ -23,13 +23,9 @@ namespace Telephony
             To.Add(receipients);
             Subject = subject;
             Body = body;
-
-            Cc = new MailAddressCollection();
-            Bcc = new MailAddressCollection();
-            Attachments = new AttachmentCollection();
         }
 
-        public Email(IEnumerable<MailAddress> receipients, string subject = null, string body = null)
+        public Email(IEnumerable<MailAddress> receipients, string subject = null, string body = null) : this()
         {
             if (receipients == null)
             {
@@ -43,10 +39,6 @@ namespace Telephony
 
             Subject = subject;
             Body = body;
-
-            Cc = new MailAddressCollection();
-            Bcc = new MailAddressCollection();
-            Attachments = new AttachmentCollection();
         }
 
         public MailAddressCollection To { get; set; }

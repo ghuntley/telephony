@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
+using System.Reactive.Linq;
+using System.Diagnostics;
 using ReactiveUI;
 using TelephonySampleApp.Core;
 using Xamarin.Forms;
@@ -21,13 +24,21 @@ namespace TelephonySampleApp.iOS
     {
         UIWindow window;
         AutoSuspendHelper suspendHelper;
-        UIViewController vc;
 
         public AppDelegate()
         {
             RxApp.SuspensionHost.CreateNewAppState = () => new AppBootstrapper();
             
             Locator.CurrentMutable.RegisterConstant(new TelephonyService(), typeof(ITelephonyService));
+            
+            UserError.RegisterHandler(ue =>
+            {
+                Debug.WriteLine(String.Format("Error: {0}", ue.ErrorMessage));
+                Debug.WriteLine(String.Format("Exception: {0}", ue.InnerException));
+
+                return Observable.Return(RecoveryOptionResult.CancelOperation);
+
+            });
         }
 
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
