@@ -119,6 +119,10 @@
       <Project>{CE82F5E5-2BA9-4D2E-9E7A-2DA9A3877661}</Project>
       <Name>TelephonySampleApp.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\Telephony\Telephony.csproj">
+      <Project>{42BCAE72-088C-4C9C-810A-0E9248B25125}</Project>
+      <Name>Telephony</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

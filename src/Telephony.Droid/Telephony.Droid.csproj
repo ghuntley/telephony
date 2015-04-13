@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Resources\Resource.designer.cs" />
+    <Compile Include="TelephonyService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -50,4 +51,10 @@
     <AndroidResource Include="Resources\values\Strings.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\Telephony\Telephony.csproj">
+      <Project>{42BCAE72-088C-4C9C-810A-0E9248B25125}</Project>
+      <Name>Telephony</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

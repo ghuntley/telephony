@@ -26,6 +26,9 @@
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchUseRefCounting>true</MtouchUseRefCounting>
+    <MtouchI18n>
+    </MtouchI18n>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -102,15 +105,16 @@
     <None Include="Entitlements.plist" />
   </ItemGroup>
   <ItemGroup>
-    <InterfaceDefinition Include="MainStoryboard_iPad.storyboard" />
-    <InterfaceDefinition Include="MainStoryboard_iPhone.storyboard" />
-    <Compile Include="RootViewController.cs" />
-    <Compile Include="EAGLView.cs" />
-    <BundleResource Include="Shader.fsh" />
-    <BundleResource Include="Shader.vsh" />
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="OpenTK-1.0" />
+    <Reference Include="Xamarin.Forms.Platform.iOS">
+      <HintPath>..\..\src\packages\Xamarin.Forms.1.4.1.6349\lib\Xamarin.iOS10\Xamarin.Forms.Platform.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Core">
+      <HintPath>..\..\src\packages\Xamarin.Forms.1.4.1.6349\lib\Xamarin.iOS10\Xamarin.Forms.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Xaml">
+      <HintPath>..\..\src\packages\Xamarin.Forms.1.4.1.6349\lib\Xamarin.iOS10\Xamarin.Forms.Xaml.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ReactiveUI">
@@ -153,9 +157,14 @@
       <Project>{CE82F5E5-2BA9-4D2E-9E7A-2DA9A3877661}</Project>
       <Name>TelephonySampleApp.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\Telephony\Telephony.csproj">
+      <Project>{42BCAE72-088C-4C9C-810A-0E9248B25125}</Project>
+      <Name>Telephony</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Import Project="..\..\src\packages\Xamarin.Forms.1.4.1.6349\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\src\packages\Xamarin.Forms.1.4.1.6349\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>

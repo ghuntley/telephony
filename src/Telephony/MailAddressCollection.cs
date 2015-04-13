@@ -33,5 +33,10 @@ namespace Telephony
             }
             return emailAddresses.ToString();
         }
+
+        public string[] ToArray()
+        {
+            return this.ToArray();
+        }
     }
 }

@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ReactiveUI;
+using TelephonySampleApp.Core;
+using Xamarin.Forms;
 
 using Foundation;
 
@@ -14,34 +17,41 @@ namespace TelephonySampleApp.iOS
     [Register("AppDelegate")]
     public partial class AppDelegate : UIApplicationDelegate
     {
-        // class-level declarations
-        public override UIWindow Window
+        UIWindow window;
+        AutoSuspendHelper suspendHelper;
+        UIViewController vc;
+
+        public AppDelegate()
         {
-            get;
-            set;
+            RxApp.SuspensionHost.CreateNewAppState = () => new AppBootstrapper();
         }
 
-        // This method should be used to release shared resources and it should store the application state.
-        // If your application supports background exection this method is called instead of WillTerminate
-        // when the user quits.
+        public override bool FinishedLaunching(UIApplication app, NSDictionary options)
+        {
+            Forms.Init();
+            RxApp.SuspensionHost.SetupDefaultSuspendResume();
+
+            suspendHelper = new AutoSuspendHelper(this);
+            suspendHelper.FinishedLaunching(app, options);
+
+            window = new UIWindow(UIScreen.MainScreen.Bounds);
+            var bootstrapper = RxApp.SuspensionHost.GetAppState<AppBootstrapper>();
+
+            window.RootViewController = bootstrapper.CreateMainPage().CreateViewController();
+            window.MakeKeyAndVisible();
+
+            return true;
+        }
+
         public override void DidEnterBackground(UIApplication application)
         {
+            suspendHelper.DidEnterBackground(application);
         }
 
-        // This method is invoked when the application is about to move from active to inactive state.
-        // OpenGL applications should use this method to pause.
-        public override void OnResignActivation(UIApplication application)
+        public override void OnActivated(UIApplication application)
         {
+            suspendHelper.OnActivated(application);
         }
-
-        // This method is called as part of the transiton from background to active state.
-        public override void WillEnterForeground(UIApplication application)
-        {
-        }
-
-        // This method is called when the application is about to terminate. Save data, if needed.
-        public override void WillTerminate(UIApplication application)
-        {
-        }
+        
     }
 }

@@ -1,14 +1,16 @@
 ﻿<Properties StartupItem="../samples/TelephonySampleApp.iOS/TelephonySampleApp.iOS.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.ResizableIPhone.8.2" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="../../../../../Library/Frameworks/Mono.framework/External/xbuild/Xamarin/iOS/Xamarin.iOS.Common.targets">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone4s.8.2" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="../samples/TelephonySampleApp.iOS/AppDelegate.cs">
     <Files>
-      <File FileName="../samples/TelephonySampleApp.Droid/MainActivity.cs" Line="28" Column="56" />
-      <File FileName="../samples/TelephonySampleApp.Droid/AndroidApplication.cs" Line="22" Column="1" />
-      <File FileName="../../../../../Library/Frameworks/Mono.framework/External/xbuild/Xamarin/iOS/Xamarin.iOS.Common.targets" Line="20" Column="49" />
+      <File FileName="../samples/TelephonySampleApp.iOS/AppDelegate.cs" Line="31" Column="26" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/ghuntley/Work/telephony/samples/TelephonySampleApp.Core/ViewModels/HomeViewModel.cs" line="157" column="1" />
+      <Breakpoint file="/Users/ghuntley/Work/telephony/samples/TelephonySampleApp.Core/ViewModels/HomeViewModel.cs" line="150" column="1" />
+      <Breakpoint file="/Users/ghuntley/Work/telephony/src/Telephony.Droid/TelephonyService.cs" line="58" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.ItemProperties.samples.TelephonySampleApp.Droid AndroidDesignerPreferredDevice="Nexus 4" />

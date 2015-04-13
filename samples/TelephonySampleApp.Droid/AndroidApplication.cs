@@ -3,6 +3,8 @@ using Android.App;
 using ReactiveUI;
 using Android.Runtime;
 using TelephonySampleApp.Core;
+using Splat;
+using Telephony;
 
 namespace TelephonySampleApp.Droid
 {
@@ -31,6 +33,8 @@ namespace TelephonySampleApp.Droid
             RxApp.SuspensionHost.CreateNewAppState = () => new AppBootstrapper();
 
             RxApp.SuspensionHost.SetupDefaultSuspendResume();
+            
+            Locator.CurrentMutable.RegisterConstant(new TelephonyService(), typeof(ITelephonyService));
         }
     }
 }

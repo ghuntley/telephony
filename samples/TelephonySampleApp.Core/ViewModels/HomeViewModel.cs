@@ -67,7 +67,6 @@ namespace TelephonySampleApp.Core.ViewModels
             var canComposeSMS = this.WhenAny(x => x.Recipient, x => !String.IsNullOrWhiteSpace(x.Value));
             ComposeSMS = ReactiveCommand.CreateAsyncTask(canComposeSMS, async _ =>
             {
-
                 await TelephonyService.ComposeSMS(Recipient);
             });
             ComposeSMS.ThrownExceptions.Subscribe(ex => UserError.Throw("Does this device have the capability to send SMS?", ex));
@@ -79,7 +78,7 @@ namespace TelephonySampleApp.Core.ViewModels
 
                 await TelephonyService.ComposeEmail(email);
             });
-            ComposeEmail.ThrownExceptions.Subscribe(ex => UserError.Throw("Recipient potentially is not a well formed email address.", ex));
+            ComposeEmail.ThrownExceptions.Subscribe(ex => UserError.Throw("The recipient is potentially not a well formed email address.", ex));
 
             var canMakePhoneCall = this.WhenAny(x => x.Recipient, x => !String.IsNullOrWhiteSpace(x.Value));
             MakePhoneCall = ReactiveCommand.CreateAsyncTask(canMakePhoneCall, async _ =>
@@ -146,7 +145,7 @@ namespace TelephonySampleApp.Core.ViewModels
         }
 
 
-        private  bool IsAValidPhoneNumber(string s)
+        private static bool IsAValidPhoneNumber(string s)
         {
             int result;
             var phoneNumber = s.Replace(" ", "")
