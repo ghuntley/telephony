@@ -10,6 +10,7 @@ using Android.OS;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
+using Toasts.Forms.Plugin.Droid;
 
 using ReactiveUI;
 
@@ -29,6 +30,8 @@ namespace TelephonySampleApp.Droid
         {
             base.OnCreate(bundle);
             Forms.Init(this, bundle);
+            ToastNotificatorImplementation.Init(); 
+            
 
             var mainPage = RxApp.SuspensionHost.GetAppState<AppBootstrapper>().CreateMainPage();
             this.SetPage(mainPage);

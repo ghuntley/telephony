@@ -1,7 +1,11 @@
 ﻿using System;
-
+using System.Collections.Generic;
+using System.Linq;
+using System.Reactive;
+using System.Reactive.Linq;
 using ReactiveUI;
 using ReactiveUI.XamForms;
+using Toasts.Forms.Plugin.Abstractions;
 
 using Splat;
 
@@ -20,7 +24,21 @@ namespace TelephonySampleApp.Core
             Locator.CurrentMutable.RegisterConstant(this, typeof(IScreen));
 
             Locator.CurrentMutable.Register(() => new HomePage(), typeof(IViewFor<HomeViewModel>));
+            
+            UserError.RegisterHandler(ue =>
+            {
+                var notificator = DependencyService.Get<IToastNotificator>();
+                notificator.Notify(
+                    ToastNotificationType.Error, 
+                    ue.ErrorMessage, 
+                    ue.InnerException.ToString(), 
+                    TimeSpan.FromSeconds(20));
+                
+                this.Log().ErrorException(ue.ErrorMessage, ue.InnerException);
 
+                return Observable.Return(RecoveryOptionResult.CancelOperation);
+            });
+            
             Router.Navigate.Execute(new HomeViewModel());
         }
 

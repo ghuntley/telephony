@@ -8,6 +8,8 @@ using ReactiveUI;
 using TelephonySampleApp.Core;
 using Xamarin.Forms;
 
+using Toasts.Forms.Plugin.iOS;
+
 using Foundation;
 
 using UIKit;
@@ -30,20 +32,13 @@ namespace TelephonySampleApp.iOS
             RxApp.SuspensionHost.CreateNewAppState = () => new AppBootstrapper();
             
             Locator.CurrentMutable.RegisterConstant(new TelephonyService(), typeof(ITelephonyService));
-            
-            UserError.RegisterHandler(ue =>
-            {
-                Debug.WriteLine(String.Format("Error: {0}", ue.ErrorMessage));
-                Debug.WriteLine(String.Format("Exception: {0}", ue.InnerException));
-
-                return Observable.Return(RecoveryOptionResult.CancelOperation);
-
-            });
         }
 
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             Forms.Init();
+            ToastNotificatorImplementation.Init(); 
+
             RxApp.SuspensionHost.SetupDefaultSuspendResume();
 
             suspendHelper = new AutoSuspendHelper(this);

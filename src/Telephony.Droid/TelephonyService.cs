@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Android.App;
@@ -8,6 +9,7 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Android.Bluetooth;
+using Android.Util;
 
 
 namespace Telephony
@@ -26,9 +28,9 @@ namespace Telephony
                 
                 var intent = new Intent(Intent.ActionSend);
             
-                intent.PutExtra(Intent.ExtraEmail, email.To.ToArray());
-                intent.PutExtra(Intent.ExtraCc, email.Cc.ToArray());
-                intent.PutExtra(Intent.ExtraBcc, email.Bcc.ToArray());
+                intent.PutExtra(Intent.ExtraEmail, email.To.Select(x => x.Address).ToArray());
+                intent.PutExtra(Intent.ExtraCc, email.Cc.Select(x => x.Address).ToArray());
+                intent.PutExtra(Intent.ExtraBcc, email.Bcc.Select(x => x.Address).ToArray());
 
                 intent.PutExtra(Intent.ExtraTitle, email.Subject ?? string.Empty);
             

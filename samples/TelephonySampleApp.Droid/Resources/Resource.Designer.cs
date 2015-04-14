@@ -27,6 +27,16 @@ namespace TelephonySampleApp.Droid
 		public static void UpdateIdValues()
 		{
 			global::Splat.Resource.String.library_name = global::TelephonySampleApp.Droid.Resource.String.library_name;
+			global::Toasts.Forms.Plugin.Droid.Resource.Drawable.error = global::TelephonySampleApp.Droid.Resource.Drawable.error;
+			global::Toasts.Forms.Plugin.Droid.Resource.Drawable.info = global::TelephonySampleApp.Droid.Resource.Drawable.info;
+			global::Toasts.Forms.Plugin.Droid.Resource.Drawable.success = global::TelephonySampleApp.Droid.Resource.Drawable.success;
+			global::Toasts.Forms.Plugin.Droid.Resource.Drawable.warning = global::TelephonySampleApp.Droid.Resource.Drawable.warning;
+			global::Toasts.Forms.Plugin.Droid.Resource.Id.desc = global::TelephonySampleApp.Droid.Resource.Id.desc;
+			global::Toasts.Forms.Plugin.Droid.Resource.Id.image = global::TelephonySampleApp.Droid.Resource.Id.image;
+			global::Toasts.Forms.Plugin.Droid.Resource.Id.title = global::TelephonySampleApp.Droid.Resource.Id.title;
+			global::Toasts.Forms.Plugin.Droid.Resource.Layout.crouton = global::TelephonySampleApp.Droid.Resource.Layout.crouton;
+			global::Toasts.Forms.Plugin.Droid.Resource.String.ApplicationName = global::TelephonySampleApp.Droid.Resource.String.ApplicationName;
+			global::Toasts.Forms.Plugin.Droid.Resource.String.Hello = global::TelephonySampleApp.Droid.Resource.String.Hello;
 			global::Telephony.Resource.String.library_name = global::TelephonySampleApp.Droid.Resource.String.library_name;
 		}
 		
@@ -47,10 +57,22 @@ namespace TelephonySampleApp.Droid
 		{
 			
 			// aapt resource value: 0x7f020000
-			public const int Icon = 2130837504;
+			public const int error = 2130837504;
 			
 			// aapt resource value: 0x7f020001
-			public const int Icon_white = 2130837505;
+			public const int Icon = 2130837505;
+			
+			// aapt resource value: 0x7f020002
+			public const int Icon_white = 2130837506;
+			
+			// aapt resource value: 0x7f020003
+			public const int info = 2130837507;
+			
+			// aapt resource value: 0x7f020004
+			public const int success = 2130837508;
+			
+			// aapt resource value: 0x7f020005
+			public const int warning = 2130837509;
 			
 			static Drawable()
 			{
@@ -65,8 +87,17 @@ namespace TelephonySampleApp.Droid
 		public partial class Id
 		{
 			
+			// aapt resource value: 0x7f050003
+			public const int MyButton = 2131034115;
+			
+			// aapt resource value: 0x7f050002
+			public const int desc = 2131034114;
+			
 			// aapt resource value: 0x7f050000
-			public const int MyButton = 2131034112;
+			public const int image = 2131034112;
+			
+			// aapt resource value: 0x7f050001
+			public const int title = 2131034113;
 			
 			static Id()
 			{
@@ -82,7 +113,10 @@ namespace TelephonySampleApp.Droid
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int Main = 2130903040;
+			public const int crouton = 2130903040;
+			
+			// aapt resource value: 0x7f030001
+			public const int Main = 2130903041;
 			
 			static Layout()
 			{

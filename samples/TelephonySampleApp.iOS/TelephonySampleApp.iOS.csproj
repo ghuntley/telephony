@@ -118,6 +118,12 @@
     <Reference Include="Splat">
       <HintPath>..\..\src\packages\Splat.1.6.2\lib\Xamarin.iOS10\Splat.dll</HintPath>
     </Reference>
+    <Reference Include="Toasts.Forms.Plugin.Abstractions">
+      <HintPath>..\..\src\packages\Toasts.Forms.Plugin.1.0.6.18\lib\Xamarin.iOS10\Toasts.Forms.Plugin.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Toasts.Forms.Plugin.iOS">
+      <HintPath>..\..\src\packages\Toasts.Forms.Plugin.1.0.6.18\lib\Xamarin.iOS10\Toasts.Forms.Plugin.iOS.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ReactiveUI">

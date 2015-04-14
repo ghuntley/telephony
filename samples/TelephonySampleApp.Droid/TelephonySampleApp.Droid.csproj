@@ -85,6 +85,12 @@
     <Reference Include="Xamarin.Android.Support.v4">
       <HintPath>..\..\src\packages\Xamarin.Android.Support.v4.22.0.0.0\lib\MonoAndroid10\Xamarin.Android.Support.v4.dll</HintPath>
     </Reference>
+    <Reference Include="Toasts.Forms.Plugin.Abstractions">
+      <HintPath>..\..\src\packages\Toasts.Forms.Plugin.1.0.6.18\lib\MonoAndroid10\Toasts.Forms.Plugin.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Toasts.Forms.Plugin.Droid">
+      <HintPath>..\..\src\packages\Toasts.Forms.Plugin.1.0.6.18\lib\MonoAndroid10\Toasts.Forms.Plugin.Droid.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
