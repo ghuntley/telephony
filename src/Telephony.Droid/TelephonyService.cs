@@ -96,7 +96,7 @@ namespace Telephony
             }
         }
 
-        public bool ComposeEmailFeatureEnabled
+        public bool ComposeEmailFeatureAvailable
         {
             get
             {
@@ -104,7 +104,7 @@ namespace Telephony
             }
         }
 
-        public bool ComposeSMSFeatureEnabled
+        public bool ComposeSMSFeatureAvailable
         {
             get
             {
@@ -112,7 +112,7 @@ namespace Telephony
             }
         }
 
-        public bool MakeVideoCallFeatureEnabled
+        public bool MakeVideoCallFeatureAvailable
         {
             get
             {
@@ -120,7 +120,7 @@ namespace Telephony
             }
         }
 
-        public bool MakePhoneCallFeatureEnabled
+        public bool MakePhoneCallFeatureAvailable
         {
             get
             {

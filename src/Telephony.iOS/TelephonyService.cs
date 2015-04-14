@@ -17,6 +17,11 @@ namespace Telephony
 
         public Task ComposeEmail(Email email)
         {
+            if (!ComposeEmailFeatureAvailable)
+            {
+                throw new DeviceDoesNotSupportFeatureException();
+            }
+            
             var mailer = new MFMailComposeViewController();
 
             mailer.SetToRecipients(email.To.Select(x => x.Address).ToArray());
@@ -37,20 +42,61 @@ namespace Telephony
 
         public Task ComposeSMS(string recipient, string message = null)
         {
-            throw new NotImplementedException();
+            if (!ComposeSMSFeatureAvailable)
+            {
+                throw new DeviceDoesNotSupportFeatureException();
+            }
+            
+            var mailer = new MFMessageComposeViewController();
+            mailer.Recipients = new[] { recipient };
+            mailer.Body = message ?? string.Empty;
+
+            mailer.Finished += (s, e) => ((MFMessageComposeViewController)s).DismissViewController(true, () =>
+            {
+            });
+            
+            UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(mailer, true, null);
+            
+            return Task.FromResult(true);
         }
 
         public Task MakeVideoCall(string recipient, string displayName = null)
         {
-            throw new NotImplementedException();
+            if (String.IsNullOrWhiteSpace(recipient))
+            {
+                throw new ArgumentNullException("recipient", "Supplied argument 'recipient' is null, whitespace or empty.");
+            }
+
+            if (!MakeVideoCallFeatureAvailable)
+            {
+                throw new DeviceDoesNotSupportFeatureException();
+            }
+            
+            var url = new NSUrl("facetime://" + RemoveWhitespace(recipient));
+            UIApplication.SharedApplication.OpenUrl(url);
+
+            return Task.FromResult(true);
         }
 
         public Task MakePhoneCall(string recipient, string displayName = null)
         {
-            throw new NotImplementedException();
+            if (String.IsNullOrWhiteSpace(recipient))
+            {
+                throw new ArgumentNullException("recipient", "Supplied argument 'recipient' is null, whitespace or empty.");
+            }
+
+            if (!MakePhoneCallFeatureAvailable)
+            {
+                throw new DeviceDoesNotSupportFeatureException();
+            }
+            
+            var url = new NSUrl("tel:" + RemoveWhitespace(recipient));
+            UIApplication.SharedApplication.OpenUrl(url);
+
+            return Task.FromResult(true);
         }
 
-        public bool ComposeEmailFeatureEnabled
+        public bool ComposeEmailFeatureAvailable
         {
             get
             {
@@ -58,28 +104,41 @@ namespace Telephony
             }
         }
 
-        public bool ComposeSMSFeatureEnabled
+        public bool ComposeSMSFeatureAvailable
         {
             get
             {
-                throw new NotImplementedException();
+                return MFMessageComposeViewController.CanSendText;
             }
         }
 
-        public bool MakeVideoCallFeatureEnabled
+        public bool MakeVideoCallFeatureAvailable
         {
             get
             {
-                throw new NotImplementedException();
+                return UIApplication.SharedApplication.CanOpenUrl(new NSUrl("facetime://"));
             }
         }
 
-        public bool MakePhoneCallFeatureEnabled
+        public bool MakePhoneCallFeatureAvailable
         {
             get
             {
-                throw new NotImplementedException();
+                return UIApplication.SharedApplication.CanOpenUrl(new NSUrl("tel://"));
             }
+        }
+
+        /// <remarks>
+        /// NSUrl("[facetime://|tel://]") fails to function if there are spaces in the url.
+        /// </remarks>
+        private static string RemoveWhitespace(string phonenumber)
+        {
+            if (String.IsNullOrWhiteSpace(phonenumber))
+            {
+                return String.Empty;
+            }
+        
+            return phonenumber.Replace(" ", String.Empty);
         }
     }
 }
