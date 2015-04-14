@@ -6,19 +6,19 @@ namespace Telephony
 {
     public interface ITelephonyService
     {
-        bool ComposeEmailFeatureAvailable { get; }
+        bool CanComposeEmail { get; }
 
         Task ComposeEmail(Email email);
 
-        bool ComposeSMSFeatureAvailable { get ; }
+        bool CanComposeSMS { get ; }
 
         Task ComposeSMS(string recipient, string message = null);
 
-        bool MakeVideoCallFeatureAvailable { get; }
+        bool CanMakeVideoCall { get; }
 
         Task MakeVideoCall(string recipient, string displayName = null);
 
-        bool MakePhoneCallFeatureAvailable { get; }
+        bool CanMakePhoneCall { get; }
 
         Task MakePhoneCall(string recipient, string displayName = null);
     }

@@ -17,7 +17,7 @@ namespace Telephony
 
         public Task ComposeEmail(Email email)
         {
-            if (!ComposeEmailFeatureAvailable)
+            if (!CanComposeEmail)
             {
                 throw new DeviceDoesNotSupportFeatureException();
             }
@@ -42,7 +42,7 @@ namespace Telephony
 
         public Task ComposeSMS(string recipient, string message = null)
         {
-            if (!ComposeSMSFeatureAvailable)
+            if (!CanComposeSMS)
             {
                 throw new DeviceDoesNotSupportFeatureException();
             }
@@ -67,7 +67,7 @@ namespace Telephony
                 throw new ArgumentNullException("recipient", "Supplied argument 'recipient' is null, whitespace or empty.");
             }
 
-            if (!MakeVideoCallFeatureAvailable)
+            if (!CanMakeVideoCall)
             {
                 throw new DeviceDoesNotSupportFeatureException();
             }
@@ -85,7 +85,7 @@ namespace Telephony
                 throw new ArgumentNullException("recipient", "Supplied argument 'recipient' is null, whitespace or empty.");
             }
 
-            if (!MakePhoneCallFeatureAvailable)
+            if (!CanMakePhoneCall)
             {
                 throw new DeviceDoesNotSupportFeatureException();
             }
@@ -96,7 +96,7 @@ namespace Telephony
             return Task.FromResult(true);
         }
 
-        public bool ComposeEmailFeatureAvailable
+        public bool CanComposeEmail
         {
             get
             {
@@ -104,7 +104,7 @@ namespace Telephony
             }
         }
 
-        public bool ComposeSMSFeatureAvailable
+        public bool CanComposeSMS
         {
             get
             {
@@ -112,7 +112,7 @@ namespace Telephony
             }
         }
 
-        public bool MakeVideoCallFeatureAvailable
+        public bool CanMakeVideoCall
         {
             get
             {
@@ -120,7 +120,7 @@ namespace Telephony
             }
         }
 
-        public bool MakePhoneCallFeatureAvailable
+        public bool CanMakePhoneCall
         {
             get
             {
