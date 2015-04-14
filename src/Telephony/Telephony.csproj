@@ -34,11 +34,11 @@
     <Compile Include="Attachment.cs" />
     <Compile Include="AttachmentCollection.cs" />
     <Compile Include="Email.cs" />
-    <Compile Include="FeatureNotImplementedException.cs" />
     <Compile Include="MailAddress.cs" />
     <Compile Include="MailAddressCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ITelephonyService.cs" />
+    <Compile Include="FeatureNotAvailableException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>

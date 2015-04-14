@@ -19,7 +19,7 @@ namespace Telephony
         {
             if (!CanComposeEmail)
             {
-                throw new DeviceDoesNotSupportFeatureException();
+                throw new FeatureNotAvailableException();
             }
             
             var mailer = new MFMailComposeViewController();
@@ -44,7 +44,7 @@ namespace Telephony
         {
             if (!CanComposeSMS)
             {
-                throw new DeviceDoesNotSupportFeatureException();
+                throw new FeatureNotAvailableException();
             }
             
             var mailer = new MFMessageComposeViewController();
@@ -69,7 +69,7 @@ namespace Telephony
 
             if (!CanMakeVideoCall)
             {
-                throw new DeviceDoesNotSupportFeatureException();
+                throw new FeatureNotAvailableException();
             }
             
             var url = new NSUrl("facetime://" + RemoveWhitespace(recipient));
@@ -87,7 +87,7 @@ namespace Telephony
 
             if (!CanMakePhoneCall)
             {
-                throw new DeviceDoesNotSupportFeatureException();
+                throw new FeatureNotAvailableException();
             }
             
             var url = new NSUrl("tel:" + RemoveWhitespace(recipient));
