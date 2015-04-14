@@ -4,11 +4,10 @@
 // System.Net.Mail.MailAddress.cs
 //
 // Author:
-//	Tim Coleman (tim@timcoleman.com)
+//    Tim Coleman (tim@timcoleman.com)
 //
 // Copyright (C) Tim Coleman, 2004
 //
-
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -17,10 +16,10 @@
 // distribute, sublicense, and/or sell copies of the Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
 // the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -42,8 +41,8 @@ namespace Telephony
         private string host;
         private string to_string;
         private string user;
-        //Encoding displayNameEncoding;
 
+        //Encoding displayNameEncoding;
         public MailAddress(string address)
             : this(address, null)
         {
@@ -65,6 +64,67 @@ namespace Telephony
             if (displayName != null)
                 this.displayName = displayName.Trim();
             ParseAddress(address);
+        }
+
+        public string Address
+        {
+            get { return address; }
+        }
+
+        public string DisplayName
+        {
+            get
+            {
+                if (displayName == null)
+                    return string.Empty;
+                return displayName;
+            }
+        }
+
+        public string Host
+        {
+            get { return host; }
+        }
+
+        public string User
+        {
+            get { return user; }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+
+            return (0 == String.Compare(ToString(), obj.ToString(), StringComparison.OrdinalIgnoreCase));
+        }
+
+        public override int GetHashCode()
+        {
+            return ToString().GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            if (to_string != null)
+                return to_string;
+
+            if (!String.IsNullOrEmpty(displayName))
+            {
+                to_string = String.Format("\"{0}\" <{1}>", DisplayName, Address);
+            }
+            else
+            {
+                to_string = address;
+            }
+
+            return to_string;
+        }
+
+        private static FormatException CreateFormatException()
+        {
+            return new FormatException("The specified string is not in the "
+            + "form required for an e-mail address.");
         }
 
         private void ParseAddress(string address)
@@ -117,69 +177,5 @@ namespace Telephony
             if (host.Length == 0)
                 throw CreateFormatException();
         }
-
-
-        public string Address
-        {
-            get { return address; }
-        }
-
-        public string DisplayName
-        {
-            get
-            {
-                if (displayName == null)
-                    return string.Empty;
-                return displayName;
-            }
-        }
-
-        public string Host
-        {
-            get { return host; }
-        }
-
-        public string User
-        {
-            get { return user; }
-        }
-
-
-        public override bool Equals(object obj)
-        {
-            if (obj == null)
-                return false;
-
-            return (0 == String.Compare(ToString(), obj.ToString(), StringComparison.OrdinalIgnoreCase));
-        }
-
-        public override int GetHashCode()
-        {
-            return ToString().GetHashCode();
-        }
-
-        public override string ToString()
-        {
-            if (to_string != null)
-                return to_string;
-
-            if (!String.IsNullOrEmpty(displayName))
-            {
-                to_string = String.Format("\"{0}\" <{1}>", DisplayName, Address);
-            }
-            else
-            {
-                to_string = address;
-            }
-
-            return to_string;
-        }
-
-        private static FormatException CreateFormatException()
-        {
-            return new FormatException("The specified string is not in the "
-            + "form required for an e-mail address.");
-        }
-
     }
 }

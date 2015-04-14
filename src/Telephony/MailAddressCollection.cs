@@ -12,7 +12,7 @@ namespace Telephony
             {
                 throw new ArgumentNullException("addresses", "Supplied argument 'addresses' is null, whitespace or empty.");
             }
-            
+
             foreach (string address in addresses.Split(','))
             {
                 this.Add(new MailAddress(address));

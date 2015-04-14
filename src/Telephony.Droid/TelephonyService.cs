@@ -3,14 +3,13 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Android.App;
+using Android.Bluetooth;
 using Android.Content;
+using Android.OS;
 using Android.Runtime;
+using Android.Util;
 using Android.Views;
 using Android.Widget;
-using Android.OS;
-using Android.Bluetooth;
-using Android.Util;
-
 
 namespace Telephony
 {
@@ -18,22 +17,53 @@ namespace Telephony
     {
         public TelephonyService()
         {
-            
+        }
+
+        public bool CanComposeEmail
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        public bool CanComposeSMS
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        public bool CanMakePhoneCall
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        public bool CanMakeVideoCall
+        {
+            get
+            {
+                return true;
+            }
         }
 
         public Task ComposeEmail(Email email)
         {
             try
             {
-                
+
                 var intent = new Intent(Intent.ActionSend);
-            
+
                 intent.PutExtra(Intent.ExtraEmail, email.To.Select(x => x.Address).ToArray());
                 intent.PutExtra(Intent.ExtraCc, email.Cc.Select(x => x.Address).ToArray());
                 intent.PutExtra(Intent.ExtraBcc, email.Bcc.Select(x => x.Address).ToArray());
 
                 intent.PutExtra(Intent.ExtraTitle, email.Subject ?? string.Empty);
-            
+
                 if (email.IsHTML)
                 {
                     intent.PutExtra(Intent.ExtraText, Android.Text.Html.FromHtml(email.Body));
@@ -42,12 +72,12 @@ namespace Telephony
                 {
                     intent.PutExtra(Intent.ExtraText, email.Body ?? string.Empty);
                 }
-            
+
                 intent.SetType("message/rfc822");
-            
+
                 return Task.FromResult(true);
                 //this.StartActivity(intent);
-//            Device.StartActivity(intent);
+            //            Device.StartActivity(intent);
             }
             catch (Exception ex)
             {
@@ -63,19 +93,7 @@ namespace Telephony
                 var intent = new Intent(Intent.ActionSendto, uri);
                 intent.PutExtra("sms_body", message ?? string.Empty);
                 //            StartActivity(smsIntent);
-                
-                return Task.FromResult(true);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-        }
 
-        public Task MakeVideoCall(string recipient, string displayName = null)
-        {
-            try
-            {
                 return Task.FromResult(true);
             }
             catch (Exception ex)
@@ -96,37 +114,16 @@ namespace Telephony
             }
         }
 
-        public bool CanComposeEmail
+        public Task MakeVideoCall(string recipient, string displayName = null)
         {
-            get
+            try
             {
-                return true;
+                return Task.FromResult(true);
             }
-        }
-
-        public bool CanComposeSMS
-        {
-            get
+            catch (Exception ex)
             {
-                return true;
-            }
-        }
-
-        public bool CanMakeVideoCall
-        {
-            get
-            {
-                return true;
-            }
-        }
-
-        public bool CanMakePhoneCall
-        {
-            get
-            {
-                return true;
+                throw;
             }
         }
     }
 }
-
