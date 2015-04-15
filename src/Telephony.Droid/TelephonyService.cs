@@ -53,77 +53,83 @@ namespace Telephony
 
         public Task ComposeEmail(Email email)
         {
-            try
+            if (!CanComposeEmail)
             {
-
-                var intent = new Intent(Intent.ActionSend);
-
-                intent.PutExtra(Intent.ExtraEmail, email.To.Select(x => x.Address).ToArray());
-                intent.PutExtra(Intent.ExtraCc, email.Cc.Select(x => x.Address).ToArray());
-                intent.PutExtra(Intent.ExtraBcc, email.Bcc.Select(x => x.Address).ToArray());
-
-                intent.PutExtra(Intent.ExtraTitle, email.Subject ?? string.Empty);
-
-                if (email.IsHTML)
-                {
-                    intent.PutExtra(Intent.ExtraText, Android.Text.Html.FromHtml(email.Body));
-                }
-                else
-                {
-                    intent.PutExtra(Intent.ExtraText, email.Body ?? string.Empty);
-                }
-
-                intent.SetType("message/rfc822");
-
-                return Task.FromResult(true);
-                //this.StartActivity(intent);
-            //            Device.StartActivity(intent);
+                throw new FeatureNotAvailableException();
             }
-            catch (Exception ex)
+            
+            var intent = new Intent(Intent.ActionSend);
+
+            intent.PutExtra(Intent.ExtraEmail, email.To.Select(x => x.Address).ToArray());
+            intent.PutExtra(Intent.ExtraCc, email.Cc.Select(x => x.Address).ToArray());
+            intent.PutExtra(Intent.ExtraBcc, email.Bcc.Select(x => x.Address).ToArray());
+
+            intent.PutExtra(Intent.ExtraTitle, email.Subject ?? string.Empty);
+
+            if (email.IsHTML)
             {
-                throw;
+                intent.PutExtra(Intent.ExtraText, Android.Text.Html.FromHtml(email.Body));
             }
+            else
+            {
+                intent.PutExtra(Intent.ExtraText, email.Body ?? string.Empty);
+            }
+
+            intent.SetType("message/rfc822");
+
+            return Task.FromResult(true);
+//                this.StartActivity(intent);
+//                Device.StartActivity(intent);
         }
 
         public Task ComposeSMS(string recipient, string message = null)
         {
-            try
+            if (!CanComposeSMS)
             {
-                var uri = Android.Net.Uri.Parse(String.Format("smsto:{0}", recipient));
-                var intent = new Intent(Intent.ActionSendto, uri);
-                intent.PutExtra("sms_body", message ?? string.Empty);
-                //            StartActivity(smsIntent);
+                throw new FeatureNotAvailableException();
+            }
+            
+            var uri = Android.Net.Uri.Parse(String.Format("smsto:{0}", recipient));
+            var intent = new Intent(Intent.ActionSendto, uri);
+            intent.PutExtra("sms_body", message ?? string.Empty);
+            //            StartActivity(smsIntent);
 
-                return Task.FromResult(true);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            return Task.FromResult(true);
         }
 
         public Task MakePhoneCall(string recipient, string displayName = null)
         {
-            try
+            if (String.IsNullOrWhiteSpace(recipient))
             {
-                return Task.FromResult(true);
+                throw new ArgumentNullException("recipient", "Supplied argument 'recipient' is null, whitespace or empty.");
             }
-            catch (Exception ex)
+
+            if (!CanMakePhoneCall)
             {
-                throw;
+                throw new FeatureNotAvailableException();
             }
+ 
+            var uri = Android.Net.Uri.Parse(String.Format("tel:{0}", recipient));
+            var intent = new Intent(Intent.ActionSendto, uri);
+            //            StartActivity(smsIntent);
+            
+            return Task.FromResult(true);
         }
 
         public Task MakeVideoCall(string recipient, string displayName = null)
         {
-            try
+            if (String.IsNullOrWhiteSpace(recipient))
             {
-                return Task.FromResult(true);
+                throw new ArgumentNullException("recipient", "Supplied argument 'recipient' is null, whitespace or empty.");
             }
-            catch (Exception ex)
+            
+            if (!CanMakeVideoCall)
             {
-                throw;
+                throw new FeatureNotAvailableException();
             }
+            
+            
+            return Task.FromResult(true);
         }
     }
 }
