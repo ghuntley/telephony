@@ -10,10 +10,13 @@ using Android.Runtime;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
+using Android.Provider;
+using Android.Telephony;
+
 
 namespace Telephony
 {
-    public class TelephonyService : ITelephonyService
+    public class TelephonyService : IntentService, ITelephonyService
     {
         public TelephonyService()
         {
@@ -39,7 +42,9 @@ namespace Telephony
         {
             get
             {
-                return true;
+                var telephonyManager = this.GetSystemService(Context.TelephonyService) as TelephonyManager;
+
+                return telephonyManager.PhoneType != PhoneType.None;
             }
         }
 
