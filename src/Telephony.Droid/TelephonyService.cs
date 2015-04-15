@@ -22,13 +22,6 @@ namespace Telephony
         {
         }
 
-        private readonly TelephonyManager _telephonyManager;
-
-        public TelephonyService()
-        {
-            _telephonyManager = this.GetSystemService(Context.TelephonyService) as TelephonyManager;
-        }
-
         /// <summary>
         /// TODO: Determine appropriate way to toggle this on and off.
         /// </summary>
