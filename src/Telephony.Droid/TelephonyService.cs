@@ -18,10 +18,16 @@ namespace Telephony
 {
     public class TelephonyService : IntentService, ITelephonyService
     {
+        private readonly TelephonyManager _telephonyManager;
+
         public TelephonyService()
         {
+            _telephonyManager = this.GetSystemService(Context.TelephonyService) as TelephonyManager;
         }
 
+        /// <summary>
+        /// TODO: Determine appropriate way to toggle this on and off.
+        /// </summary>
         public bool CanComposeEmail
         {
             get
@@ -30,6 +36,9 @@ namespace Telephony
             }
         }
 
+        /// <summary>
+        /// TODO: Determine appropriate way to toggle this on and off.
+        /// </summary>
         public bool CanComposeSMS
         {
             get
@@ -38,16 +47,20 @@ namespace Telephony
             }
         }
 
+        /// <summary>
+        /// TODO: Determine appropriate way to toggle this on and off.
+        /// </summary>
         public bool CanMakePhoneCall
         {
             get
             {
-                var telephonyManager = this.GetSystemService(Context.TelephonyService) as TelephonyManager;
-
-                return telephonyManager.PhoneType != PhoneType.None;
+                return true;
             }
         }
 
+        /// <summary>
+        /// TODO: Determine appropriate way to toggle this on and off.
+        /// </summary>
         public bool CanMakeVideoCall
         {
             get
@@ -82,9 +95,9 @@ namespace Telephony
 
             intent.SetType("message/rfc822");
 
+            StartActivity(intent);
+
             return Task.FromResult(true);
-//                this.StartActivity(intent);
-//                Device.StartActivity(intent);
         }
 
         public Task ComposeSMS(string recipient, string message = null)
@@ -94,10 +107,12 @@ namespace Telephony
                 throw new FeatureNotAvailableException();
             }
             
-            var uri = Android.Net.Uri.Parse(String.Format("smsto:{0}", recipient));
+            var uri = Android.Net.Uri.Parse(String.Format("sms:{0}", recipient));
+            
             var intent = new Intent(Intent.ActionSendto, uri);
             intent.PutExtra("sms_body", message ?? string.Empty);
-            //            StartActivity(smsIntent);
+            
+            StartActivity(intent);
 
             return Task.FromResult(true);
         }
@@ -116,7 +131,7 @@ namespace Telephony
  
             var uri = Android.Net.Uri.Parse(String.Format("tel:{0}", recipient));
             var intent = new Intent(Intent.ActionSendto, uri);
-            //            StartActivity(smsIntent);
+            StartActivity(intent);
             
             return Task.FromResult(true);
         }
