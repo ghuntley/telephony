@@ -18,6 +18,10 @@ namespace Telephony
 {
     public class TelephonyService : IntentService, ITelephonyService
     {
+        protected override void OnHandleIntent(Intent intent)
+        {
+        }
+
         private readonly TelephonyManager _telephonyManager;
 
         public TelephonyService()
