@@ -3,6 +3,8 @@
 ![](http://www.netanimations.net/yeild-to-animated-construction-guy.gif)
 # Telephony 
 
+[![Join the chat at https://gitter.im/ghuntley/telephony](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ghuntley/telephony?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Telephony will be a xplat library that provides email, sms, voice and video call functionality. 
 
 # Supported Platforms
