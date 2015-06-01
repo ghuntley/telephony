@@ -8,41 +8,29 @@ using Uri = Android.Net.Uri;
 
 namespace Telephony
 {
-    public class TelephonyService : IntentService, ITelephonyService
+    public class TelephonyService : ITelephonyService
     {
-        /// <summary>
-        ///     TODO: Determine appropriate way to toggle this on and off.
-        /// </summary>
         public virtual bool CanComposeEmail
         {
             get { return true; }
         }
 
-        /// <summary>
-        ///     TODO: Determine appropriate way to toggle this on and off.
-        /// </summary>
         public virtual bool CanComposeSMS
         {
             get { return true; }
         }
 
-        /// <summary>
-        ///     TODO: Determine appropriate way to toggle this on and off.
-        /// </summary>
         public virtual bool CanMakePhoneCall
         {
             get { return true; }
         }
 
-        /// <summary>
-        ///     TODO: Determine appropriate way to toggle this on and off.
-        /// </summary>
         public virtual bool CanMakeVideoCall
         {
             get { return true; }
         }
 
-        public virtual Task ComposeEmail(Email email)
+        public virtual Task ComposeEmail(IEmailMessage emailMessage)
         {
             if (!CanComposeEmail)
             {
@@ -51,24 +39,24 @@ namespace Telephony
 
             var intent = new Intent(Intent.ActionSend);
 
-            intent.PutExtra(Intent.ExtraEmail, email.To.Select(x => x.Address).ToArray());
-            intent.PutExtra(Intent.ExtraCc, email.Cc.Select(x => x.Address).ToArray());
-            intent.PutExtra(Intent.ExtraBcc, email.Bcc.Select(x => x.Address).ToArray());
+            intent.PutExtra(Intent.ExtraEmail, emailMessage.To.Select(x => x.Address).ToArray());
+            intent.PutExtra(Intent.ExtraCc, emailMessage.Cc.Select(x => x.Address).ToArray());
+            intent.PutExtra(Intent.ExtraBcc, emailMessage.Bcc.Select(x => x.Address).ToArray());
 
-            intent.PutExtra(Intent.ExtraTitle, email.Subject ?? string.Empty);
+            intent.PutExtra(Intent.ExtraTitle, emailMessage.Subject);
 
-            if (email.IsHTML)
+            if (emailMessage.IsHTML)
             {
-                intent.PutExtra(Intent.ExtraText, Html.FromHtml(email.Body));
+                intent.PutExtra(Intent.ExtraText, Html.FromHtml(emailMessage.Body));
             }
             else
             {
-                intent.PutExtra(Intent.ExtraText, email.Body ?? string.Empty);
+                intent.PutExtra(Intent.ExtraText, emailMessage.Body);
             }
 
             intent.SetType("message/rfc822");
 
-            StartActivity(intent);
+            intent.StartNewActivity();
 
             return Task.FromResult(true);
         }
@@ -85,7 +73,7 @@ namespace Telephony
             var intent = new Intent(Intent.ActionSendto, uri);
             intent.PutExtra("sms_body", message ?? string.Empty);
 
-            StartActivity(intent);
+            intent.StartNewActivity();
 
             return Task.FromResult(true);
         }

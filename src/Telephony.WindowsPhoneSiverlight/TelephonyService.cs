@@ -7,12 +7,12 @@ namespace Telephony
 {
     public class TelephonyService : ITelephonyService
     {
-        public virtual async Task ComposeEmail(Email email)
+        public virtual async Task ComposeEmail(IEmailMessage emailMessage)
         {
-            if (email == null)
+            if (emailMessage == null)
             {
-                throw new ArgumentNullException("email",
-                    "Supplied argument 'email' is null.");
+                throw new ArgumentNullException("emailMessage",
+                    "Supplied argument 'emailMessage' is null.");
             }
 
             if (!CanComposeEmail)
@@ -20,9 +20,15 @@ namespace Telephony
                 throw new FeatureNotAvailableException();
             }
 
-            var task = new EmailComposeTask {Subject = email.Subject, Body = email.Body};
-
-            // TODO - To || CC | BCC
+            var task = new EmailComposeTask
+            {
+                To = emailMessage.To.ToString(),
+                Cc = emailMessage.Cc.ToString(),
+                Bcc = emailMessage.Bcc.ToString(),
+                
+                Subject = emailMessage.Subject,
+                Body = emailMessage.Body
+            };
 
             task.Show();
         }

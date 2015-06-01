@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Calls;
 using Windows.ApplicationModel.Chat;
@@ -9,11 +10,11 @@ namespace Telephony
 {
     public class TelephonyService : ITelephonyService
     {
-        public virtual async Task ComposeEmail(Email email)
+        public virtual async Task ComposeEmail(IEmailMessage emailMessage)
         {
-            if (email == null)
+            if (emailMessage == null)
             {
-                throw new ArgumentNullException("email", "Supplied argument 'email' is null.");
+                throw new ArgumentNullException("emailMessage", "Supplied argument 'emailMessage' is null.");
             }
 
             if (!CanComposeEmail)
@@ -21,8 +22,13 @@ namespace Telephony
                 throw new FeatureNotAvailableException();
             }
 
+            var email = new Windows.ApplicationModel.Email.EmailMessage()
+            {
+
+            };
+
+ 
             await EmailManager.ShowComposeNewEmailAsync(null);
-            //return Task.FromResult(true);
         }
 
         public virtual async Task ComposeSMS(string recipient, string message = null)

@@ -29,7 +29,7 @@ namespace Telephony
             get { return UIApplication.SharedApplication.CanOpenUrl(new NSUrl("facetime://")); }
         }
 
-        public virtual Task ComposeEmail(Email email)
+        public virtual Task ComposeEmail(IEmailMessage emailMessage)
         {
             if (!CanComposeEmail)
             {
@@ -38,12 +38,12 @@ namespace Telephony
 
             var mailer = new MFMailComposeViewController();
 
-            mailer.SetToRecipients(email.To.Select(x => x.Address).ToArray());
-            mailer.SetCcRecipients(email.Cc.Select(x => x.Address).ToArray());
-            mailer.SetBccRecipients(email.Bcc.Select(x => x.Address).ToArray());
+            mailer.SetToRecipients(emailMessage.To.ToArray());
+            mailer.SetCcRecipients(emailMessage.Cc.ToArray());
+            mailer.SetBccRecipients(emailMessage.Bcc.ToArray());
 
-            mailer.SetSubject(email.Subject ?? string.Empty);
-            mailer.SetMessageBody(email.Body ?? string.Empty, email.IsHTML);
+            mailer.SetSubject(emailMessage.Subject);
+            mailer.SetMessageBody(emailMessage.Body, emailMessage.IsHTML);
 
             mailer.Finished += (s, e) => ((MFMailComposeViewController) s).DismissViewController(true, () => { });
 
