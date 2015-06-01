@@ -1,78 +1,54 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Android.App;
-using Android.Bluetooth;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Util;
-using Android.Views;
-using Android.Widget;
-using Android.Provider;
-using Android.Telephony;
-
+using Android.Text;
+using Uri = Android.Net.Uri;
 
 namespace Telephony
 {
     public class TelephonyService : IntentService, ITelephonyService
     {
-        protected override void OnHandleIntent(Intent intent)
+        /// <summary>
+        ///     TODO: Determine appropriate way to toggle this on and off.
+        /// </summary>
+        public virtual bool CanComposeEmail
         {
+            get { return true; }
         }
 
         /// <summary>
-        /// TODO: Determine appropriate way to toggle this on and off.
+        ///     TODO: Determine appropriate way to toggle this on and off.
         /// </summary>
-        public bool CanComposeEmail
+        public virtual bool CanComposeSMS
         {
-            get
-            {
-                return true;
-            }
+            get { return true; }
         }
 
         /// <summary>
-        /// TODO: Determine appropriate way to toggle this on and off.
+        ///     TODO: Determine appropriate way to toggle this on and off.
         /// </summary>
-        public bool CanComposeSMS
+        public virtual bool CanMakePhoneCall
         {
-            get
-            {
-                return true;
-            }
+            get { return true; }
         }
 
         /// <summary>
-        /// TODO: Determine appropriate way to toggle this on and off.
+        ///     TODO: Determine appropriate way to toggle this on and off.
         /// </summary>
-        public bool CanMakePhoneCall
+        public virtual bool CanMakeVideoCall
         {
-            get
-            {
-                return true;
-            }
+            get { return true; }
         }
 
-        /// <summary>
-        /// TODO: Determine appropriate way to toggle this on and off.
-        /// </summary>
-        public bool CanMakeVideoCall
-        {
-            get
-            {
-                return true;
-            }
-        }
-
-        public Task ComposeEmail(Email email)
+        public virtual Task ComposeEmail(Email email)
         {
             if (!CanComposeEmail)
             {
                 throw new FeatureNotAvailableException();
             }
-            
+
             var intent = new Intent(Intent.ActionSend);
 
             intent.PutExtra(Intent.ExtraEmail, email.To.Select(x => x.Address).ToArray());
@@ -83,7 +59,7 @@ namespace Telephony
 
             if (email.IsHTML)
             {
-                intent.PutExtra(Intent.ExtraText, Android.Text.Html.FromHtml(email.Body));
+                intent.PutExtra(Intent.ExtraText, Html.FromHtml(email.Body));
             }
             else
             {
@@ -97,56 +73,62 @@ namespace Telephony
             return Task.FromResult(true);
         }
 
-        public Task ComposeSMS(string recipient, string message = null)
+        public virtual Task ComposeSMS(string recipient, string message = null)
         {
             if (!CanComposeSMS)
             {
                 throw new FeatureNotAvailableException();
             }
-            
-            var uri = Android.Net.Uri.Parse(String.Format("sms:{0}", recipient));
-            
+
+            var uri = Uri.Parse(string.Format("sms:{0}", recipient));
+
             var intent = new Intent(Intent.ActionSendto, uri);
             intent.PutExtra("sms_body", message ?? string.Empty);
-            
+
             StartActivity(intent);
 
             return Task.FromResult(true);
         }
 
-        public Task MakePhoneCall(string recipient, string displayName = null)
+        public virtual Task MakePhoneCall(string recipient, string displayName = null)
         {
-            if (String.IsNullOrWhiteSpace(recipient))
+            if (string.IsNullOrWhiteSpace(recipient))
             {
-                throw new ArgumentNullException("recipient", "Supplied argument 'recipient' is null, whitespace or empty.");
+                throw new ArgumentNullException("recipient",
+                    "Supplied argument 'recipient' is null, whitespace or empty.");
             }
 
             if (!CanMakePhoneCall)
             {
                 throw new FeatureNotAvailableException();
             }
- 
-            var uri = Android.Net.Uri.Parse(String.Format("tel:{0}", recipient));
+
+            var uri = Uri.Parse(string.Format("tel:{0}", recipient));
             var intent = new Intent(Intent.ActionSendto, uri);
             StartActivity(intent);
-            
+
             return Task.FromResult(true);
         }
 
-        public Task MakeVideoCall(string recipient, string displayName = null)
+        public virtual Task MakeVideoCall(string recipient, string displayName = null)
         {
-            if (String.IsNullOrWhiteSpace(recipient))
+            if (string.IsNullOrWhiteSpace(recipient))
             {
-                throw new ArgumentNullException("recipient", "Supplied argument 'recipient' is null, whitespace or empty.");
+                throw new ArgumentNullException("recipient",
+                    "Supplied argument 'recipient' is null, whitespace or empty.");
             }
-            
+
             if (!CanMakeVideoCall)
             {
                 throw new FeatureNotAvailableException();
             }
-            
-            
+
+
             return Task.FromResult(true);
+        }
+
+        protected override void OnHandleIntent(Intent intent)
+        {
         }
     }
 }

@@ -135,12 +135,6 @@
     </PRIResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Telephony.WPA81\Telephony.WPA81.csproj">
-      <Project>{7b1194bd-be83-4e31-9e85-e279e7c828bd}</Project>
-      <Name>Telephony.WPA81</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="ReactiveUI">
       <HintPath>..\..\src\packages\reactiveui-core.6.4.0.1\lib\Portable-Win81+WPA81\ReactiveUI.dll</HintPath>
     </Reference>
@@ -180,6 +174,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Telephony.WindowsPhone\Telephony.WindowsPhone.csproj">
+      <Project>{1445776e-129b-457e-9cd9-106fc17223ea}</Project>
+      <Name>Telephony.WindowsPhone</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Telephony\Telephony.csproj">
+      <Project>{42bcae72-088c-4c9c-810a-0e9248b25125}</Project>
+      <Name>Telephony</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TelephonySampleApp.Core\TelephonySampleApp.Core.csproj">
+      <Project>{ce82f5e5-2ba9-4d2e-9e7a-2da9a3877661}</Project>
+      <Name>TelephonySampleApp.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>

@@ -1,15 +1,17 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="TelephonySampleApp.Core.Pages.HomePage">
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TelephonySampleApp.Core.Pages.HomePage">
     <ContentPage.Content>
         <StackLayout Orientation="Vertical" Padding="0,20,0,0">
             <StackLayout Orientation="Vertical">
-                <Entry x:Name="Recipient"  x:StyleId="Recipient" Placeholder="Phone Number or Email Address(s)" />
+                <Entry x:Name="Recipient" x:StyleId="Recipient" Placeholder="Phone Number or Email Address(s)" />
             </StackLayout>
 
-            <Button x:Name="ComposeSMS"  x:StyleId="ComposeSMS"  Text="Compose SMS" />
-            <Button x:Name="ComposeEmail"  x:StyleId="ComposeEmail"  Text="Compose Email" />
-            <Button x:Name="MakePhoneCall"  x:StyleId="MakePhoneCall"  Text="Voice Call" />
-            <Button x:Name="MakeVideoCall"  x:StyleId="MakeVideoCall"  Text="Video Call" />
+            <Button x:Name="ComposeSMS" x:StyleId="ComposeSMS" Text="Compose SMS" />
+            <Button x:Name="ComposeEmail" x:StyleId="ComposeEmail" Text="Compose Email" />
+            <Button x:Name="MakePhoneCall" x:StyleId="MakePhoneCall" Text="Voice Call" />
+            <Button x:Name="MakeVideoCall" x:StyleId="MakeVideoCall" Text="Video Call" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

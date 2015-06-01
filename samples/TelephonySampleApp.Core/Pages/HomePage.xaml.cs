@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ReactiveUI;
 using TelephonySampleApp.Core.ViewModels;
-
-using ReactiveUI;
-
 using Xamarin.Forms;
 
 namespace TelephonySampleApp.Core.Pages
 {
     public partial class HomePage : ContentPage, IViewFor<HomeViewModel>
     {
-        public static readonly BindableProperty ViewModelProperty = 
-            BindableProperty.Create<HomePage, HomeViewModel>(x => x.ViewModel, default(HomeViewModel), BindingMode.OneWay);
+        public static readonly BindableProperty ViewModelProperty =
+            BindableProperty.Create<HomePage, HomeViewModel>(x => x.ViewModel, default(HomeViewModel),
+                BindingMode.OneWay);
 
         public HomePage()
         {
             InitializeComponent();
 
             this.Bind(ViewModel, vm => vm.Recipient, v => v.Recipient.Text);
-            
+
             this.BindCommand(ViewModel, vm => vm.ComposeEmail, v => v.ComposeEmail);
             this.BindCommand(ViewModel, vm => vm.ComposeSMS, v => v.ComposeSMS);
             this.BindCommand(ViewModel, vm => vm.MakePhoneCall, v => v.MakePhoneCall);
@@ -27,14 +24,14 @@ namespace TelephonySampleApp.Core.Pages
 
         public HomeViewModel ViewModel
         {
-            get { return (HomeViewModel)GetValue(ViewModelProperty); }
+            get { return (HomeViewModel) GetValue(ViewModelProperty); }
             set { SetValue(ViewModelProperty, value); }
         }
 
         object IViewFor.ViewModel
         {
             get { return ViewModel; }
-            set { ViewModel = (HomeViewModel)value; }
+            set { ViewModel = (HomeViewModel) value; }
         }
     }
 }

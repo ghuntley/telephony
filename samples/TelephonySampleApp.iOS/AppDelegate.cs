@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reactive;
-using System.Reactive.Linq;
-using System.Diagnostics;
+﻿using Foundation;
 using ReactiveUI;
-using TelephonySampleApp.Core;
-using Xamarin.Forms;
-
-using Toasts.Forms.Plugin.iOS;
-
-using Foundation;
-
-using UIKit;
 using Splat;
 using Telephony;
+using TelephonySampleApp.Core;
+using Toasts.Forms.Plugin.iOS;
+using UIKit;
+using Xamarin.Forms;
 
 namespace TelephonySampleApp.iOS
 {
@@ -22,22 +13,22 @@ namespace TelephonySampleApp.iOS
     // User Interface of the application, as well as listening (and optionally responding) to
     // application events from iOS.
     [Register("AppDelegate")]
-    public partial class AppDelegate : UIApplicationDelegate
+    public class AppDelegate : UIApplicationDelegate
     {
-        UIWindow window;
-        AutoSuspendHelper suspendHelper;
+        private AutoSuspendHelper suspendHelper;
+        private UIWindow window;
 
         public AppDelegate()
         {
             RxApp.SuspensionHost.CreateNewAppState = () => new AppBootstrapper();
-            
-            Locator.CurrentMutable.RegisterConstant(new TelephonyService(), typeof(ITelephonyService));
+
+            Locator.CurrentMutable.RegisterConstant(new TelephonyService(), typeof (ITelephonyService));
         }
 
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             Forms.Init();
-            ToastNotificatorImplementation.Init(); 
+            ToastNotificatorImplementation.Init();
 
             RxApp.SuspensionHost.SetupDefaultSuspendResume();
 
@@ -62,6 +53,5 @@ namespace TelephonySampleApp.iOS
         {
             suspendHelper.OnActivated(application);
         }
-        
     }
 }

@@ -1,12 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
+﻿using System.ComponentModel;
 
 namespace TelephonySampleApp.WP8.ViewModels
 {
@@ -16,18 +8,13 @@ namespace TelephonySampleApp.WP8.ViewModels
         private string _lineThree;
         private string _lineTwo;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         /// <summary>
-        /// Sample ViewModel property; this property is used in the view to display its value using a Binding.
+        ///     Sample ViewModel property; this property is used in the view to display its value using a Binding.
         /// </summary>
         /// <returns></returns>
         public string LineOne
         {
-            get
-            {
-                return _lineOne;
-            }
+            get { return _lineOne; }
             set
             {
                 if (value != _lineOne)
@@ -39,15 +26,12 @@ namespace TelephonySampleApp.WP8.ViewModels
         }
 
         /// <summary>
-        /// Sample ViewModel property; this property is used in the view to display its value using a Binding.
+        ///     Sample ViewModel property; this property is used in the view to display its value using a Binding.
         /// </summary>
         /// <returns></returns>
         public string LineThree
         {
-            get
-            {
-                return _lineThree;
-            }
+            get { return _lineThree; }
             set
             {
                 if (value != _lineThree)
@@ -59,15 +43,12 @@ namespace TelephonySampleApp.WP8.ViewModels
         }
 
         /// <summary>
-        /// Sample ViewModel property; this property is used in the view to display its value using a Binding.
+        ///     Sample ViewModel property; this property is used in the view to display its value using a Binding.
         /// </summary>
         /// <returns></returns>
         public string LineTwo
         {
-            get
-            {
-                return _lineTwo;
-            }
+            get { return _lineTwo; }
             set
             {
                 if (value != _lineTwo)
@@ -78,9 +59,11 @@ namespace TelephonySampleApp.WP8.ViewModels
             }
         }
 
-        private void NotifyPropertyChanged(String propertyName)
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged(string propertyName)
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
+            var handler = PropertyChanged;
             if (null != handler)
             {
                 handler(this, new PropertyChangedEventArgs(propertyName));

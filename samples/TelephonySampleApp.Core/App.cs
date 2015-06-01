@@ -1,7 +1,4 @@
-﻿using System;
-
-using ReactiveUI;
-
+﻿using ReactiveUI;
 using Xamarin.Forms;
 
 namespace TelephonySampleApp.Core
@@ -11,12 +8,12 @@ namespace TelephonySampleApp.Core
         public App()
         {
             var bootstrapper = RxApp.SuspensionHost.GetAppState<AppBootstrapper>();
-            
+
             MainPage = bootstrapper.CreateMainPage();
         }
 
         /// <summary>
-        /// Override this method to perform actions when the application resumes from a sleeping state.*/
+        ///     Override this method to perform actions when the application resumes from a sleeping state.
         /// </summary>
         protected override void OnResume()
         {
@@ -24,7 +21,7 @@ namespace TelephonySampleApp.Core
         }
 
         /// <summary>
-        /// Override this method to perform actions when the application enters the sleeping state.
+        ///     Override this method to perform actions when the application enters the sleeping state.
         /// </summary>
         protected override void OnSleep()
         {
@@ -32,7 +29,7 @@ namespace TelephonySampleApp.Core
         }
 
         /// <summary>
-        /// Override this method to perform actions when the application starts.
+        ///     Override this method to perform actions when the application starts.
         /// </summary>
         protected override void OnStart()
         {

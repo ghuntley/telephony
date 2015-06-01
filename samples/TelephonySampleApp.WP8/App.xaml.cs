@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Resources;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Navigation;
-
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-
 using TelephonySampleApp.WP8.Resources;
 using TelephonySampleApp.WP8.ViewModels;
 
@@ -15,13 +12,12 @@ namespace TelephonySampleApp.WP8
 {
     public partial class App : Application
     {
-        private static MainViewModel viewModel = null;
-
+        private static MainViewModel viewModel;
         // Avoid double-initialization
-        private bool phoneApplicationInitialized = false;
+        private bool phoneApplicationInitialized;
 
         /// <summary>
-        /// Constructor for the Application object.
+        ///     Constructor for the Application object.
         /// </summary>
         public App()
         {
@@ -41,7 +37,7 @@ namespace TelephonySampleApp.WP8
             if (Debugger.IsAttached)
             {
                 // Display the current frame rate counters
-                Application.Current.Host.Settings.EnableFrameRateCounter = true;
+                Current.Host.Settings.EnableFrameRateCounter = true;
 
                 // Show the areas of the app that are being redrawn in each frame.
                 //Application.Current.Host.Settings.EnableRedrawRegions = true;
@@ -59,16 +55,13 @@ namespace TelephonySampleApp.WP8
         }
 
         /// <summary>
-        /// Provides easy access to the root frame of the Phone Application.
+        ///     Provides easy access to the root frame of the Phone Application.
         /// </summary>
         /// <returns>The root frame of the Phone Application.</returns>
-        public static PhoneApplicationFrame RootFrame
-        {
-            get; private set;
-        }
+        public static PhoneApplicationFrame RootFrame { get; private set; }
 
         /// <summary>
-        /// A static ViewModel used by the views to bind against.
+        ///     A static ViewModel used by the views to bind against.
         /// </summary>
         /// <returns>The MainViewModel object.</returns>
         public static MainViewModel ViewModel
@@ -88,9 +81,9 @@ namespace TelephonySampleApp.WP8
         private void Application_Activated(object sender, ActivatedEventArgs e)
         {
             // Ensure that application state is restored appropriately
-            if (!App.ViewModel.IsDataLoaded)
+            if (!ViewModel.IsDataLoaded)
             {
-                App.ViewModel.LoadData();
+                ViewModel.LoadData();
             }
         }
 
@@ -195,7 +188,7 @@ namespace TelephonySampleApp.WP8
                 //
                 // If a compiler error is hit then ResourceFlowDirection is missing from
                 // the resource file.
-                FlowDirection flow = (FlowDirection)Enum.Parse(typeof(FlowDirection), AppResources.ResourceFlowDirection);
+                var flow = (FlowDirection) Enum.Parse(typeof (FlowDirection), AppResources.ResourceFlowDirection);
                 RootFrame.FlowDirection = flow;
             }
             catch

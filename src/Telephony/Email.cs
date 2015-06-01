@@ -8,9 +8,10 @@ namespace Telephony
         public Email(string receipients, string subject = null, string body = null)
             : this()
         {
-            if (String.IsNullOrWhiteSpace(receipients))
+            if (string.IsNullOrWhiteSpace(receipients))
             {
-                throw new ArgumentNullException("receipients", "Supplied argument 'receipients' is null, whitespace or empty.");
+                throw new ArgumentNullException("receipients",
+                    "Supplied argument 'receipients' is null, whitespace or empty.");
             }
 
             To.Add(receipients);
@@ -26,7 +27,7 @@ namespace Telephony
                 throw new ArgumentNullException("receipients", "Supplied argument 'receipients' is null.");
             }
 
-            foreach (MailAddress mailAddress in receipients)
+            foreach (var mailAddress in receipients)
             {
                 To.Add(mailAddress);
             }
@@ -43,39 +44,18 @@ namespace Telephony
             Attachments = new AttachmentCollection();
         }
 
-        public AttachmentCollection Attachments
-        {
-            get; set;
-        }
+        public AttachmentCollection Attachments { get; set; }
 
-        public MailAddressCollection Bcc
-        {
-            get; set;
-        }
+        public MailAddressCollection Bcc { get; set; }
 
-        public string Body
-        {
-            get; set;
-        }
+        public string Body { get; set; }
 
-        public MailAddressCollection Cc
-        {
-            get; set;
-        }
+        public MailAddressCollection Cc { get; set; }
 
-        public bool IsHTML
-        {
-            get; set;
-        }
+        public bool IsHTML { get; set; }
 
-        public string Subject
-        {
-            get; set;
-        }
+        public string Subject { get; set; }
 
-        public MailAddressCollection To
-        {
-            get; set;
-        }
+        public MailAddressCollection To { get; set; }
     }
 }

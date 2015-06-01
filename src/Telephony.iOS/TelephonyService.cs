@@ -1,53 +1,35 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Foundation;
-
 using MessageUI;
-
 using UIKit;
 
 namespace Telephony
 {
     public class TelephonyService : ITelephonyService
     {
-        public bool CanComposeEmail
+        public virtual bool CanComposeEmail
         {
-            get
-            {
-                return MFMailComposeViewController.CanSendMail;
-            }
+            get { return MFMailComposeViewController.CanSendMail; }
         }
 
-        public bool CanComposeSMS
+        public virtual bool CanComposeSMS
         {
-            get
-            {
-                return MFMessageComposeViewController.CanSendText;
-            }
+            get { return MFMessageComposeViewController.CanSendText; }
         }
 
-        public bool CanMakePhoneCall
+        public virtual bool CanMakePhoneCall
         {
-            get
-            {
-                return UIApplication.SharedApplication.CanOpenUrl(new NSUrl("tel://"));
-            }
+            get { return UIApplication.SharedApplication.CanOpenUrl(new NSUrl("tel://")); }
         }
 
-        public bool CanMakeVideoCall
+        public virtual bool CanMakeVideoCall
         {
-            get
-            {
-                return UIApplication.SharedApplication.CanOpenUrl(new NSUrl("facetime://"));
-            }
+            get { return UIApplication.SharedApplication.CanOpenUrl(new NSUrl("facetime://")); }
         }
 
-        public Task ComposeEmail(Email email)
+        public virtual Task ComposeEmail(Email email)
         {
             if (!CanComposeEmail)
             {
@@ -63,16 +45,14 @@ namespace Telephony
             mailer.SetSubject(email.Subject ?? string.Empty);
             mailer.SetMessageBody(email.Body ?? string.Empty, email.IsHTML);
 
-            mailer.Finished += (s, e) => ((MFMailComposeViewController)s).DismissViewController(true, () =>
-            {
-            });
+            mailer.Finished += (s, e) => ((MFMailComposeViewController) s).DismissViewController(true, () => { });
 
             UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(mailer, true, null);
 
             return Task.FromResult(true);
         }
 
-        public Task ComposeSMS(string recipient, string message = null)
+        public virtual Task ComposeSMS(string recipient, string message = null)
         {
             if (!CanComposeSMS)
             {
@@ -80,23 +60,22 @@ namespace Telephony
             }
 
             var mailer = new MFMessageComposeViewController();
-            mailer.Recipients = new[] { recipient };
+            mailer.Recipients = new[] {recipient};
             mailer.Body = message ?? string.Empty;
 
-            mailer.Finished += (s, e) => ((MFMessageComposeViewController)s).DismissViewController(true, () =>
-            {
-            });
+            mailer.Finished += (s, e) => ((MFMessageComposeViewController) s).DismissViewController(true, () => { });
 
             UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(mailer, true, null);
 
             return Task.FromResult(true);
         }
 
-        public Task MakePhoneCall(string recipient, string displayName = null)
+        public virtual Task MakePhoneCall(string recipient, string displayName = null)
         {
-            if (String.IsNullOrWhiteSpace(recipient))
+            if (string.IsNullOrWhiteSpace(recipient))
             {
-                throw new ArgumentNullException("recipient", "Supplied argument 'recipient' is null, whitespace or empty.");
+                throw new ArgumentNullException("recipient",
+                    "Supplied argument 'recipient' is null, whitespace or empty.");
             }
 
             if (!CanMakePhoneCall)
@@ -110,11 +89,12 @@ namespace Telephony
             return Task.FromResult(true);
         }
 
-        public Task MakeVideoCall(string recipient, string displayName = null)
+        public virtual Task MakeVideoCall(string recipient, string displayName = null)
         {
-            if (String.IsNullOrWhiteSpace(recipient))
+            if (string.IsNullOrWhiteSpace(recipient))
             {
-                throw new ArgumentNullException("recipient", "Supplied argument 'recipient' is null, whitespace or empty.");
+                throw new ArgumentNullException("recipient",
+                    "Supplied argument 'recipient' is null, whitespace or empty.");
             }
 
             if (!CanMakeVideoCall)
@@ -129,16 +109,16 @@ namespace Telephony
         }
 
         /// <remarks>
-        /// NSUrl("[facetime://|tel://]") fails to function if there are spaces in the url.
+        ///     NSUrl("[facetime://|tel://]") fails to function if there are spaces in the url.
         /// </remarks>
         private static string RemoveWhitespace(string phonenumber)
         {
-            if (String.IsNullOrWhiteSpace(phonenumber))
+            if (string.IsNullOrWhiteSpace(phonenumber))
             {
-                return String.Empty;
+                return string.Empty;
             }
 
-            return phonenumber.Replace(" ", String.Empty);
+            return phonenumber.Replace(" ", string.Empty);
         }
     }
 }

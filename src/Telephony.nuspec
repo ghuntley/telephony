@@ -6,7 +6,7 @@
 		<tags>Phone Video Call Compose Email SMS Xamarin iOS Android WindowsPhone Siverlight Universal</tags>
 		<version>0.0.1</version>
 		<authors>Geoffrey Huntley</authors>
-		<licenseUrl>https://github.com/XForms/Xamarin-Forms-Labs/blob/master/LICENSE</licenseUrl>
+		<licenseUrl>https://github.com/ghuntley/telephony/blob/master/LICENSE.md</licenseUrl>
 		<projectUrl>https://github.com/ghuntley/telephony</projectUrl>
 		<iconUrl>http://i.imgur.com/xsRdz22.png</iconUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -32,33 +32,37 @@
 			</group>
 			<group targetFramework="wp8">
 				<reference file="Telephony.dll"/>
-				<reference file="Telephony.WP8.dll"/>
+				<reference file="Telephony.WindowsPhoneSilverlight.dll"/>
+			</group>
+			<group targetFramework="wpa">
+				<reference file="Telephony.dll"/>
+				<reference file="Telephony.WindowsPhone.dll"/>
 			</group>
 		</references>
 	</metadata>
 	<files>
 		<file src="Telephony\bin\Release\Telephony.dll" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
-        <file src="Telephony\bin\Release\Telephony.dll.mdb" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
+    <file src="Telephony\bin\Release\Telephony.dll.mdb" target="lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1" />
 
-        <file src="Telephony.Droid\bin\Release\Telephony.Droid.dll" target="lib\MonoAndroid" />
-        <file src="Telephony.Droid\bin\Release\Telephony.Droid.mdb" target="lib\MonoAndroid" />
+    <file src="Telephony.Droid\bin\Release\Telephony.Droid.dll" target="lib\MonoAndroid" />
+    <file src="Telephony.Droid\bin\Release\Telephony.Droid.mdb" target="lib\MonoAndroid" />
 		<file src="Telephony.Droid\bin\Release\Telephony.dll" target="lib\MonoAndroid" />
-        <file src="Telephony.Droid\bin\Release\Telephony.mdb" target="lib\MonoAndroid" />
+    <file src="Telephony.Droid\bin\Release\Telephony.mdb" target="lib\MonoAndroid" />
 
-        <file src="Telephony.iOS\bin\Release\Telephony.iOS.dll" target="lib\Xamarin.iOS10" />
-        <file src="Telephony.iOS\bin\Release\Telephony.iOS.mdb" target="lib\Xamarin.iOS10" />
-        <file src="Telephony.iOS\bin\Release\Telephony.dll" target="lib\Xamarin.iOS10" />
-        <file src="Telephony.iOS\bin\Release\Telephony.mdb" target="lib\Xamarin.iOS10" />
+    <file src="Telephony.iOS\bin\Release\Telephony.iOS.dll" target="lib\Xamarin.iOS10" />
+    <file src="Telephony.iOS\bin\Release\Telephony.iOS.mdb" target="lib\Xamarin.iOS10" />
+    <file src="Telephony.iOS\bin\Release\Telephony.dll" target="lib\Xamarin.iOS10" />
+    <file src="Telephony.iOS\bin\Release\Telephony.mdb" target="lib\Xamarin.iOS10" />
 
-        <file src="Telephony.WP8\bin\Release\Telephony.WP8.dll" target="lib\wp8" />
-        <file src="Telephony.WP8\bin\Release\Telephony.WP8.mdb" target="lib\wp8" />
-        <file src="Telephony.WP8\bin\Release\Telephony.dll" target="lib\wp8" />
-        <file src="Telephony.WP8\bin\Release\Telephony.mdb" target="lib\wp8" />
+    <file src="Telephony.WindowsPhoneSilverlight\bin\Release\Telephony.WindowsPhoneSilverlight.dll" target="lib\wp8" />
+    <file src="Telephony.WindowsPhoneSilverlight\bin\Release\Telephony.WindowsPhoneSilverlight.mdb" target="lib\wp8" />
+    <file src="Telephony.WindowsPhoneSilverlight\bin\Release\Telephony.dll" target="lib\wp8" />
+    <file src="Telephony.WindowsPhoneSilverlight\bin\Release\Telephony.mdb" target="lib\wp8" />
 
-        <file src="Telephony.WP8\bin\Release\Telephony.WP8.dll" target="lib\wpa81" />
-        <file src="Telephony.WP8\bin\Release\Telephony.WP8.mdb" target="lib\wpa81" />
-        <file src="Telephony.WP8\bin\Release\Telephony.dll" target="lib\wpa81" />
-        <file src="Telephony.WP8\bin\Release\Telephony.mdb" target="lib\wpa81" />
+    <file src="Telephony.WindowsPhone\bin\Release\Telephony.WindowsPhone.dll" target="lib\wpa81" />
+    <file src="Telephony.WindowsPhone\bin\Release\Telephony.WindowsPhone.mdb" target="lib\wpa81" />
+    <file src="Telephony.WindowsPhone\bin\Release\Telephony.dll" target="lib\wpa81" />
+    <file src="Telephony.WindowsPhone\bin\Release\Telephony.mdb" target="lib\wpa81" />
 
 		<!-- Source Files for Symbol Server -->
 		<file src="**\*.cs" target="src" />

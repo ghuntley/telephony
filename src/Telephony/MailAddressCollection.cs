@@ -8,21 +8,22 @@ namespace Telephony
     {
         public void Add(string addresses)
         {
-            if (String.IsNullOrWhiteSpace(addresses))
+            if (string.IsNullOrWhiteSpace(addresses))
             {
-                throw new ArgumentNullException("addresses", "Supplied argument 'addresses' is null, whitespace or empty.");
+                throw new ArgumentNullException("addresses",
+                    "Supplied argument 'addresses' is null, whitespace or empty.");
             }
 
-            foreach (string address in addresses.Split(','))
+            foreach (var address in addresses.Split(','))
             {
-                this.Add(new MailAddress(address));
+                Add(new MailAddress(address));
             }
         }
 
         public override string ToString()
         {
             var emailAddresses = new StringBuilder();
-            for (int i = 0; i < Count; i += 1)
+            for (var i = 0; i < Count; i += 1)
             {
                 if (i > 0)
                 {

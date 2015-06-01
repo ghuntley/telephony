@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace TelephonySampleApp.WPA81.Common
 {
     /// <summary>
-    /// A command whose sole purpose is to relay its functionality 
-    /// to other objects by invoking delegates. 
-    /// The default return value for the CanExecute method is 'true'.
-    /// <see cref="RaiseCanExecuteChanged"/> needs to be called whenever
-    /// <see cref="CanExecute"/> is expected to return a different value.
+    ///     A command whose sole purpose is to relay its functionality
+    ///     to other objects by invoking delegates.
+    ///     The default return value for the CanExecute method is 'true'.
+    ///     <see cref="RaiseCanExecuteChanged" /> needs to be called whenever
+    ///     <see cref="CanExecute" /> is expected to return a different value.
     /// </summary>
     public class RelayCommand : ICommand
     {
@@ -20,7 +16,7 @@ namespace TelephonySampleApp.WPA81.Common
         private readonly Action _execute;
 
         /// <summary>
-        /// Creates a new command that can always execute.
+        ///     Creates a new command that can always execute.
         /// </summary>
         /// <param name="execute">The execution logic.</param>
         public RelayCommand(Action execute)
@@ -29,7 +25,7 @@ namespace TelephonySampleApp.WPA81.Common
         }
 
         /// <summary>
-        /// Creates a new command.
+        ///     Creates a new command.
         /// </summary>
         /// <param name="execute">The execution logic.</param>
         /// <param name="canExecute">The execution status logic.</param>
@@ -42,15 +38,15 @@ namespace TelephonySampleApp.WPA81.Common
         }
 
         /// <summary>
-        /// Raised when RaiseCanExecuteChanged is called.
+        ///     Raised when RaiseCanExecuteChanged is called.
         /// </summary>
         public event EventHandler CanExecuteChanged;
 
         /// <summary>
-        /// Determines whether this <see cref="RelayCommand"/> can execute in its current state.
+        ///     Determines whether this <see cref="RelayCommand" /> can execute in its current state.
         /// </summary>
         /// <param name="parameter">
-        /// Data used by the command. If the command does not require data to be passed, this object can be set to null.
+        ///     Data used by the command. If the command does not require data to be passed, this object can be set to null.
         /// </param>
         /// <returns>true if this command can be executed; otherwise, false.</returns>
         public bool CanExecute(object parameter)
@@ -59,10 +55,10 @@ namespace TelephonySampleApp.WPA81.Common
         }
 
         /// <summary>
-        /// Executes the <see cref="RelayCommand"/> on the current command target.
+        ///     Executes the <see cref="RelayCommand" /> on the current command target.
         /// </summary>
         /// <param name="parameter">
-        /// Data used by the command. If the command does not require data to be passed, this object can be set to null.
+        ///     Data used by the command. If the command does not require data to be passed, this object can be set to null.
         /// </param>
         public void Execute(object parameter)
         {
@@ -70,9 +66,9 @@ namespace TelephonySampleApp.WPA81.Common
         }
 
         /// <summary>
-        /// Method used to raise the <see cref="CanExecuteChanged"/> event
-        /// to indicate that the return value of the <see cref="CanExecute"/>
-        /// method has changed.
+        ///     Method used to raise the <see cref="CanExecuteChanged" /> event
+        ///     to indicate that the return value of the <see cref="CanExecute" />
+        ///     method has changed.
         /// </summary>
         public void RaiseCanExecuteChanged()
         {

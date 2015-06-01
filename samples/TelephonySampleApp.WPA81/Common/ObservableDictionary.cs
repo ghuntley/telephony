@@ -1,24 +1,22 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-
 using Windows.Foundation.Collections;
 
 namespace TelephonySampleApp.WPA81.Common
 {
     /// <summary>
-    /// Implementation of IObservableMap that supports reentrancy for use as a default view
-    /// model.
+    ///     Implementation of IObservableMap that supports reentrancy for use as a default view
+    ///     model.
     /// </summary>
     public class ObservableDictionary : IObservableMap<string, object>
     {
-        private Dictionary<string, object> _dictionary = new Dictionary<string, object>();
-
+        private readonly Dictionary<string, object> _dictionary = new Dictionary<string, object>();
         public event MapChangedEventHandler<string, object> MapChanged;
 
         public int Count
         {
-            get { return this._dictionary.Count; }
+            get { return _dictionary.Count; }
         }
 
         public bool IsReadOnly
@@ -28,62 +26,59 @@ namespace TelephonySampleApp.WPA81.Common
 
         public ICollection<string> Keys
         {
-            get { return this._dictionary.Keys; }
+            get { return _dictionary.Keys; }
         }
 
         public ICollection<object> Values
         {
-            get { return this._dictionary.Values; }
+            get { return _dictionary.Values; }
         }
 
         public object this[string key]
         {
-            get
-            {
-                return this._dictionary[key];
-            }
+            get { return _dictionary[key]; }
             set
             {
-                this._dictionary[key] = value;
-                this.InvokeMapChanged(CollectionChange.ItemChanged, key);
+                _dictionary[key] = value;
+                InvokeMapChanged(CollectionChange.ItemChanged, key);
             }
         }
 
         public void Add(string key, object value)
         {
-            this._dictionary.Add(key, value);
-            this.InvokeMapChanged(CollectionChange.ItemInserted, key);
+            _dictionary.Add(key, value);
+            InvokeMapChanged(CollectionChange.ItemInserted, key);
         }
 
         public void Add(KeyValuePair<string, object> item)
         {
-            this.Add(item.Key, item.Value);
+            Add(item.Key, item.Value);
         }
 
         public void Clear()
         {
-            var priorKeys = this._dictionary.Keys.ToArray();
-            this._dictionary.Clear();
+            var priorKeys = _dictionary.Keys.ToArray();
+            _dictionary.Clear();
             foreach (var key in priorKeys)
             {
-                this.InvokeMapChanged(CollectionChange.ItemRemoved, key);
+                InvokeMapChanged(CollectionChange.ItemRemoved, key);
             }
         }
 
         public bool Contains(KeyValuePair<string, object> item)
         {
-            return this._dictionary.Contains(item);
+            return _dictionary.Contains(item);
         }
 
         public bool ContainsKey(string key)
         {
-            return this._dictionary.ContainsKey(key);
+            return _dictionary.ContainsKey(key);
         }
 
         public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex)
         {
-            int arraySize = array.Length;
-            foreach (var pair in this._dictionary)
+            var arraySize = array.Length;
+            foreach (var pair in _dictionary)
             {
                 if (arrayIndex >= arraySize) break;
                 array[arrayIndex++] = pair;
@@ -92,14 +87,14 @@ namespace TelephonySampleApp.WPA81.Common
 
         public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
         {
-            return this._dictionary.GetEnumerator();
+            return _dictionary.GetEnumerator();
         }
 
         public bool Remove(string key)
         {
-            if (this._dictionary.Remove(key))
+            if (_dictionary.Remove(key))
             {
-                this.InvokeMapChanged(CollectionChange.ItemRemoved, key);
+                InvokeMapChanged(CollectionChange.ItemRemoved, key);
                 return true;
             }
             return false;
@@ -108,23 +103,23 @@ namespace TelephonySampleApp.WPA81.Common
         public bool Remove(KeyValuePair<string, object> item)
         {
             object currentValue;
-            if (this._dictionary.TryGetValue(item.Key, out currentValue) &&
-                Object.Equals(item.Value, currentValue) && this._dictionary.Remove(item.Key))
+            if (_dictionary.TryGetValue(item.Key, out currentValue) &&
+                Equals(item.Value, currentValue) && _dictionary.Remove(item.Key))
             {
-                this.InvokeMapChanged(CollectionChange.ItemRemoved, item.Key);
+                InvokeMapChanged(CollectionChange.ItemRemoved, item.Key);
                 return true;
             }
             return false;
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            return this._dictionary.GetEnumerator();
+            return _dictionary.GetEnumerator();
         }
 
         public bool TryGetValue(string key, out object value)
         {
-            return this._dictionary.TryGetValue(key, out value);
+            return _dictionary.TryGetValue(key, out value);
         }
 
         private void InvokeMapChanged(CollectionChange change, string key)
@@ -140,19 +135,13 @@ namespace TelephonySampleApp.WPA81.Common
         {
             public ObservableDictionaryChangedEventArgs(CollectionChange change, string key)
             {
-                this.CollectionChange = change;
-                this.Key = key;
+                CollectionChange = change;
+                Key = key;
             }
 
-            public CollectionChange CollectionChange
-            {
-                get; private set;
-            }
+            public CollectionChange CollectionChange { get; private set; }
 
-            public string Key
-            {
-                get; private set;
-            }
+            public string Key { get; private set; }
         }
     }
 }

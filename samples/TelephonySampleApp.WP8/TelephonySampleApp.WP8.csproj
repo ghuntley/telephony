@@ -161,9 +161,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Telephony.WP8\Telephony.WP8.csproj">
-      <Project>{2821dc88-bf96-4861-ba8e-3bf96f4f7c6e}</Project>
-      <Name>Telephony.WP8</Name>
+    <ProjectReference Include="..\..\src\Telephony\Telephony.csproj">
+      <Project>{42bcae72-088c-4c9c-810a-0e9248b25125}</Project>
+      <Name>Telephony</Name>
     </ProjectReference>
     <ProjectReference Include="..\TelephonySampleApp.Core\TelephonySampleApp.Core.csproj">
       <Project>{ce82f5e5-2ba9-4d2e-9e7a-2da9a3877661}</Project>

@@ -1,24 +1,17 @@
 ﻿using System;
-
 using Android.App;
-using Android.Content;
 using Android.Content.PM;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
+using ReactiveUI;
+using TelephonySampleApp.Core;
+using Toasts.Forms.Plugin.Droid;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
-using Toasts.Forms.Plugin.Droid;
-
-using ReactiveUI;
-
-using TelephonySampleApp.Core;
-
 namespace TelephonySampleApp.Droid
 {
-    [Activity(Label = "Telephony", Icon = "@drawable/icon_white", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "Telephony", Icon = "@drawable/icon_white", MainLauncher = true,
+        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : FormsApplicationActivity
     {
         public MainActivity()
@@ -30,11 +23,11 @@ namespace TelephonySampleApp.Droid
         {
             base.OnCreate(bundle);
             Forms.Init(this, bundle);
-            ToastNotificatorImplementation.Init(); 
-            
+            ToastNotificatorImplementation.Init();
+
 
             var mainPage = RxApp.SuspensionHost.GetAppState<AppBootstrapper>().CreateMainPage();
-            this.SetPage(mainPage);
+            SetPage(mainPage);
         }
     }
 }

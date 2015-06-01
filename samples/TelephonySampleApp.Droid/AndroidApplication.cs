@@ -1,18 +1,17 @@
 ﻿using System;
 using Android.App;
-using ReactiveUI;
 using Android.Runtime;
-using TelephonySampleApp.Core;
+using ReactiveUI;
 using Splat;
 using Telephony;
+using TelephonySampleApp.Core;
 
 namespace TelephonySampleApp.Droid
 {
-
     [Application]
     public class AndroidApplication : Application
     {
-        AutoSuspendHelper _autoSuspendHelper;
+        private AutoSuspendHelper _autoSuspendHelper;
 
         public AndroidApplication(IntPtr handle, JniHandleOwnership transfer) : base(handle, transfer)
         {
@@ -33,9 +32,8 @@ namespace TelephonySampleApp.Droid
             RxApp.SuspensionHost.CreateNewAppState = () => new AppBootstrapper();
 
             RxApp.SuspensionHost.SetupDefaultSuspendResume();
-            
-            Locator.CurrentMutable.RegisterConstant(new TelephonyService(), typeof(ITelephonyService));
+
+            Locator.CurrentMutable.RegisterConstant(new TelephonyService(), typeof (ITelephonyService));
         }
     }
 }
-
