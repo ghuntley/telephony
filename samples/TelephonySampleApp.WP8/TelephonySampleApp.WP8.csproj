@@ -161,6 +161,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Telephony.WindowsPhoneSiverlight\Telephony.WindowsPhoneSiverlight.csproj">
+      <Project>{443bb0f3-b7d8-4a6b-a4d0-ac339ade1ea0}</Project>
+      <Name>Telephony.WindowsPhoneSiverlight</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\Telephony\Telephony.csproj">
       <Project>{42bcae72-088c-4c9c-810a-0e9248b25125}</Project>
       <Name>Telephony</Name>
