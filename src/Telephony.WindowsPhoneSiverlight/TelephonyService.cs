@@ -7,27 +7,49 @@ namespace Telephony
 {
     public class TelephonyService : ITelephonyService
     {
-        public virtual Task ComposeEmail(Email email)
+        public virtual async Task ComposeEmail(Email email)
         {
+            if (email == null)
+            {
+                throw new ArgumentNullException("email",
+                    "Supplied argument 'email' is null.");
+            }
+
             if (!CanComposeEmail)
             {
                 throw new FeatureNotAvailableException();
             }
 
-            throw new NotImplementedException();
+            var task = new EmailComposeTask {Subject = email.Subject, Body = email.Body};
+
+            // TODO - To || CC | BCC
+
+            task.Show();
         }
 
         public virtual async Task ComposeSMS(string recipient, string message = null)
         {
+            if (string.IsNullOrWhiteSpace(recipient))
+            {
+                throw new ArgumentNullException("recipient",
+                    "Supplied argument 'recipient' is null, whitespace or empty.");
+            }
+
             if (!CanComposeSMS)
             {
                 throw new FeatureNotAvailableException();
             }
 
-            Windows.ApplicationModel.Chat.ChatMessage msg = new Windows.ApplicationModel.Chat.ChatMessage();
+            var task = new SmsComposeTask()
+            {
+                To = recipient,
+                Body = message
+            };
+
+            task.Show();
         }
 
-        public virtual Task MakePhoneCall(string recipient, string displayName = null)
+        public virtual async Task MakePhoneCall(string recipient, string displayName = null)
         {
             if (string.IsNullOrWhiteSpace(recipient))
             {
@@ -43,10 +65,10 @@ namespace Telephony
             var task = new PhoneCallTask
             {
                 PhoneNumber = recipient,
-                displayName = displayName ?? recipient
+                DisplayName = displayName ?? recipient
             };
 
-            phoneCallTask.Show();
+            task.Show();
         }
 
         public virtual async Task MakeVideoCall(string recipient, string displayName = null)

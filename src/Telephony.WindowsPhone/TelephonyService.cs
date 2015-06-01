@@ -1,26 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Calls;
 using Windows.ApplicationModel.Chat;
+using Windows.ApplicationModel.Email;
 using Windows.System;
-
 
 namespace Telephony
 {
     public class TelephonyService : ITelephonyService
     {
-        public virtual Task ComposeEmail(Email email)
+        public virtual async Task ComposeEmail(Email email)
         {
+            if (email == null)
+            {
+                throw new ArgumentNullException("email", "Supplied argument 'email' is null.");
+            }
+
             if (!CanComposeEmail)
             {
                 throw new FeatureNotAvailableException();
             }
 
-            throw new NotImplementedException();
-
+            await EmailManager.ShowComposeNewEmailAsync(null);
+            //return Task.FromResult(true);
         }
 
         public virtual async Task ComposeSMS(string recipient, string message = null)
@@ -30,7 +32,7 @@ namespace Telephony
                 throw new FeatureNotAvailableException();
             }
 
-            var sms = new ChatMessage()
+            var sms = new ChatMessage
             {
                 Recipients = {recipient},
                 Body = message
@@ -43,7 +45,8 @@ namespace Telephony
         {
             if (string.IsNullOrWhiteSpace(recipient))
             {
-                throw new ArgumentNullException("recipient", "Supplied argument 'recipient' is null, whitespace or empty.");
+                throw new ArgumentNullException("recipient",
+                    "Supplied argument 'recipient' is null, whitespace or empty.");
             }
 
             if (!CanMakePhoneCall)
@@ -60,7 +63,8 @@ namespace Telephony
         {
             if (string.IsNullOrWhiteSpace(recipient))
             {
-                throw new ArgumentNullException("recipient", "Supplied argument 'recipient' is null, whitespace or empty.");
+                throw new ArgumentNullException("recipient",
+                    "Supplied argument 'recipient' is null, whitespace or empty.");
             }
 
             if (!CanMakeVideoCall)
@@ -74,34 +78,22 @@ namespace Telephony
 
         public virtual bool CanComposeEmail
         {
-            get
-            {
-                return true;
-            }
+            get { return true; }
         }
 
         public virtual bool CanComposeSMS
         {
-            get
-            {
-                return true;
-            }
+            get { return true; }
         }
 
         public virtual bool CanMakePhoneCall
         {
-            get
-            {
-                return true;
-            }
+            get { return true; }
         }
 
         public virtual bool CanMakeVideoCall
         {
-            get
-            {
-                return true;
-            }
+            get { return true; }
         }
     }
 }
