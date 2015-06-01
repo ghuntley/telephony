@@ -1,9 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Windows.Foundation.Collections;
-
-namespace TelephonySampleApp.WPA81.Common
+﻿namespace TelephonySampleApp.WPA81.Common
 {
     /// <summary>
     ///     Implementation of IObservableMap that supports reentrancy for use as a default view
@@ -12,7 +7,6 @@ namespace TelephonySampleApp.WPA81.Common
     public class ObservableDictionary : IObservableMap<string, object>
     {
         private readonly Dictionary<string, object> _dictionary = new Dictionary<string, object>();
-        public event MapChangedEventHandler<string, object> MapChanged;
 
         public int Count
         {
@@ -43,6 +37,8 @@ namespace TelephonySampleApp.WPA81.Common
                 InvokeMapChanged(CollectionChange.ItemChanged, key);
             }
         }
+
+        public event MapChangedEventHandler<string, object> MapChanged;
 
         public void Add(string key, object value)
         {
@@ -140,7 +136,6 @@ namespace TelephonySampleApp.WPA81.Common
             }
 
             public CollectionChange CollectionChange { get; private set; }
-
             public string Key { get; private set; }
         }
     }

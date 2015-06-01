@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using TelephonySampleApp.WP8.Resources;
+﻿using TelephonySampleApp.WP8.Resources;
 
 namespace TelephonySampleApp.WP8.ViewModels
 {

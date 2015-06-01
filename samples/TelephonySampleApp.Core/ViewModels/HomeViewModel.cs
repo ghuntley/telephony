@@ -1,8 +1,4 @@
-﻿using System;
-using System.Reactive;
-using System.Runtime.Serialization;
-using ReactiveUI;
-using Splat;
+﻿using System.Runtime.Serialization;
 using Telephony;
 
 namespace TelephonySampleApp.Core.ViewModels
@@ -11,7 +7,6 @@ namespace TelephonySampleApp.Core.ViewModels
     public class HomeViewModel : ReactiveObject, IHomeViewModel, IEnableLogger
     {
         [IgnoreDataMember] private readonly ITelephonyService TelephonyService;
-
         [IgnoreDataMember] private string _recipient;
 
         public HomeViewModel(ITelephonyService telephonyService = null, IScreen hostScreen = null)
@@ -50,13 +45,19 @@ namespace TelephonySampleApp.Core.ViewModels
         }
 
         [IgnoreDataMember]
+        public IScreen HostScreen { get; protected set; }
+
+        [IgnoreDataMember]
+        public string UrlPathSegment
+        {
+            get { return "Telephony"; }
+        }
+
+        [IgnoreDataMember]
         public ReactiveCommand<Unit> ComposeEmail { get; set; }
 
         [IgnoreDataMember]
         public ReactiveCommand<Unit> ComposeSMS { get; set; }
-
-        [IgnoreDataMember]
-        public IScreen HostScreen { get; protected set; }
 
         [IgnoreDataMember]
         public ReactiveCommand<Unit> MakePhoneCall { get; set; }
@@ -69,12 +70,6 @@ namespace TelephonySampleApp.Core.ViewModels
         {
             get { return _recipient; }
             set { this.RaiseAndSetIfChanged(ref _recipient, value); }
-        }
-
-        [IgnoreDataMember]
-        public string UrlPathSegment
-        {
-            get { return "Telephony"; }
         }
 
         private static bool IsAValidPhoneNumber(string s)

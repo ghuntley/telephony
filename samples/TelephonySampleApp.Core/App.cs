@@ -1,7 +1,4 @@
-﻿using ReactiveUI;
-using Xamarin.Forms;
-
-namespace TelephonySampleApp.Core
+﻿namespace TelephonySampleApp.Core
 {
     public class App : Application
     {

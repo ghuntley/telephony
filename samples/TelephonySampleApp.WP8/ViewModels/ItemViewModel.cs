@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace TelephonySampleApp.WP8.ViewModels
+﻿namespace TelephonySampleApp.WP8.ViewModels
 {
     public class ItemViewModel : INotifyPropertyChanged
     {

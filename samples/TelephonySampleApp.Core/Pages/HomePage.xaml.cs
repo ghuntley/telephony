@@ -1,10 +1,8 @@
-﻿using ReactiveUI;
-using TelephonySampleApp.Core.ViewModels;
-using Xamarin.Forms;
+﻿using TelephonySampleApp.Core.ViewModels;
 
 namespace TelephonySampleApp.Core.Pages
 {
-    public partial class HomePage : ContentPage, IViewFor<HomeViewModel>
+    public class HomePage : ContentPage, IViewFor<HomeViewModel>
     {
         public static readonly BindableProperty ViewModelProperty =
             BindableProperty.Create<HomePage, HomeViewModel>(x => x.ViewModel, default(HomeViewModel),

@@ -1,7 +1,4 @@
-﻿using System.Windows.Navigation;
-using Microsoft.Phone.Controls;
-
-namespace TelephonySampleApp.WP8
+﻿namespace TelephonySampleApp.WP8
 {
     public partial class MainPage : PhoneApplicationPage
     {

@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Reactive.Linq;
-using ReactiveUI;
-using ReactiveUI.XamForms;
-using Splat;
 using TelephonySampleApp.Core.Pages;
 using TelephonySampleApp.Core.ViewModels;
-using Toasts.Forms.Plugin.Abstractions;
-using Xamarin.Forms;
 
 namespace TelephonySampleApp.Core
 {

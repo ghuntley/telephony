@@ -5,13 +5,9 @@ namespace Telephony
     public interface ITelephonyService
     {
         bool CanComposeEmail { get; }
-
         bool CanComposeSMS { get; }
-
         bool CanMakePhoneCall { get; }
-
         bool CanMakeVideoCall { get; }
-
         Task ComposeEmail(Email email);
         Task ComposeSMS(string recipient, string message = null);
         Task MakePhoneCall(string recipient, string displayName = null);

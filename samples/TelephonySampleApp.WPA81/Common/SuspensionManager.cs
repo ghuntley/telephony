@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization;
-using System.Threading.Tasks;
-using Windows.Storage;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-
-namespace TelephonySampleApp.WPA81.Common
+﻿namespace TelephonySampleApp.WPA81.Common
 {
     public class SuspensionManagerException : Exception
     {

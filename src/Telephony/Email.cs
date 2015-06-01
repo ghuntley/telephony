@@ -45,17 +45,11 @@ namespace Telephony
         }
 
         public AttachmentCollection Attachments { get; set; }
-
         public MailAddressCollection Bcc { get; set; }
-
         public string Body { get; set; }
-
         public MailAddressCollection Cc { get; set; }
-
         public bool IsHTML { get; set; }
-
         public string Subject { get; set; }
-
         public MailAddressCollection To { get; set; }
     }
 }

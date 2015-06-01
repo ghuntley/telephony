@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Windows.Foundation.Metadata;
-using Windows.Phone.UI.Input;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
-
-namespace TelephonySampleApp.WPA81.Common
+﻿namespace TelephonySampleApp.WPA81.Common
 {
     /// <summary>
     ///     Represents the method that will handle the <see cref="NavigationHelper.LoadState" />event

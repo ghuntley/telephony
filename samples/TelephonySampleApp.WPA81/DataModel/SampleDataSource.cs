@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
-using Windows.Data.Json;
-using Windows.Storage;
-
-// The data model defined by this file serves as a representative example of a strongly-typed
+﻿ // The data model defined by this file serves as a representative example of a strongly-typed
 // model.  The property names chosen coincide with data bindings in the standard item templates.
 //
 // Applications may use this model as a starting point and build on it, or discard it entirely and
@@ -32,15 +24,10 @@ namespace TelephonySampleApp.WPA81.Data
         }
 
         public string Description { get; private set; }
-
         public string ImagePath { get; private set; }
-
         public ObservableCollection<SampleDataItem> Items { get; private set; }
-
         public string Subtitle { get; private set; }
-
         public string Title { get; private set; }
-
         public string UniqueId { get; private set; }
 
         public override string ToString()
@@ -66,15 +53,10 @@ namespace TelephonySampleApp.WPA81.Data
         }
 
         public string Content { get; private set; }
-
         public string Description { get; private set; }
-
         public string ImagePath { get; private set; }
-
         public string Subtitle { get; private set; }
-
         public string Title { get; private set; }
-
         public string UniqueId { get; private set; }
 
         public override string ToString()

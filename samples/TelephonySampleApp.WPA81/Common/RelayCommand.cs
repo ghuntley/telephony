@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows.Input;
-
-namespace TelephonySampleApp.WPA81.Common
+﻿namespace TelephonySampleApp.WPA81.Common
 {
     /// <summary>
     ///     A command whose sole purpose is to relay its functionality

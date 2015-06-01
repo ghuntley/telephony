@@ -1,10 +1,4 @@
-﻿using System;
-using System.Globalization;
-using Windows.ApplicationModel.Resources;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
-using TelephonySampleApp.WPA81.Common;
+﻿using TelephonySampleApp.WPA81.Common;
 using TelephonySampleApp.WPA81.Data;
 
 // The Pivot Application template is documented at http://go.microsoft.com/fwlink/?LinkID=391641
